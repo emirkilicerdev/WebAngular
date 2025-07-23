@@ -1,0 +1,40 @@
+/* src/app/auth/register/register.component.scss */
+.register-card {
+  max-width: 400px;
+  margin: 50px auto;
+  // Box-shadow ve border Material tarafından sağlanır
+}
+
+.full-width {
+  width: 100%;
+}
+
+.register-button {
+  margin-top: 15px;
+}
+
+.card-actions {
+  text-align: center;
+  margin-top: 10px;
+  a {
+    color: var(--mat-primary-text-color); // Material primary rengini kullan
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Snack Bar için global stil eklemek gerekebilir (styles.scss'e veya ayrı bir dosyaya)
+// Örneğin: src/styles.scss dosyanızın sonuna ekleyebilirsiniz
+/*
+.success-snackbar {
+  background-color: #4CAF50 !important; // Green
+  color: white !important;
+}
+
+.error-snackbar {
+  background-color: #f44336 !important; // Red
+  color: white !important;
+}
+*/

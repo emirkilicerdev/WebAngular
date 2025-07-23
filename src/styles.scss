@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* src/styles.scss veya projenizin ana stil dosyası */
+
+// Angular Material Snack Bar için özel stiller
+.success-snackbar {
+  background-color: #4CAF50 !important; /* Yeşil */
+  color: white !important;
+  border-radius: 4px;
+}
+
+.error-snackbar {
+  background-color: #f44336 !important; /* Kırmızı */
+  color: white !important;
+  border-radius: 4px;
+}

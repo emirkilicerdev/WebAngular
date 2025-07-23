@@ -1,0 +1,25 @@
+<mat-card class="login-card">
+  <mat-card-header>
+    <mat-card-title>Giriş Yap</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form (ngSubmit)="onLogin()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Kullanıcı Adı</mat-label>
+        <input matInput placeholder="Kullanıcı Adınız" [(ngModel)]="credentials.username" name="username" required>
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Şifre</mat-label>
+        <input matInput type="password" placeholder="Şifreniz" [(ngModel)]="credentials.password" name="password" required>
+        <mat-icon matSuffix>lock</mat-icon>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" class="full-width login-button">Giriş Yap</button>
+    </form>
+  </mat-card-content>
+  <mat-card-actions class="card-actions">
+    Hesabın yok mu? <a routerLink="/register">Kayıt Ol</a>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,31 @@
+<mat-card class="register-card">
+  <mat-card-header>
+    <mat-card-title>Kayıt Ol</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form (ngSubmit)="onRegister()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Kullanıcı Adı</mat-label>
+        <input matInput placeholder="Kullanıcı Adınız" [(ngModel)]="user.username" name="username" required>
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>E-posta</mat-label>
+        <input matInput type="email" placeholder="E-posta Adresiniz" [(ngModel)]="user.email" name="email" required>
+        <mat-icon matSuffix>email</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Şifre</mat-label>
+        <input matInput type="password" placeholder="Şifreniz" [(ngModel)]="user.password" name="password" required>
+        <mat-icon matSuffix>lock</mat-icon>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" class="full-width register-button">Kayıt Ol</button>
+    </form>
+  </mat-card-content>
+  <mat-card-actions class="card-actions">
+    Zaten hesabın var mı? <a routerLink="/login">Giriş Yap</a>
+  </mat-card-actions>
+</mat-card>

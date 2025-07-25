@@ -1,25 +1,64 @@
-/* src/app/auth/login/login.component.scss */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Tam ekran yüksekliği */
+  background: linear-gradient(to right, #6a11cb, #2575fc); /* Register ile aynı arka plan */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
 .login-card {
-  max-width: 400px;
-  margin: 50px auto;
+  max-width: 400px; /* Formun maksimum genişliği */
+  width: 100%;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  background-color: #fff;
+}
+
+mat-card-title {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #3f51b5;
 }
 
 .full-width {
   width: 100%;
+  margin-bottom: 15px;
 }
 
 .login-button {
-  margin-top: 15px;
+  margin-top: 20px;
+  padding: 10px 0;
+  font-size: 1.1em;
+  font-weight: 600;
+  border-radius: 8px;
 }
 
-.card-actions {
-  text-align: center;
-  margin-top: 10px;
+.login-footer {
+  margin-top: 25px;
+  font-size: 0.9em;
+  color: #555;
+
   a {
-    color: var(--mat-primary-text-color);
+    color: #3f51b5;
     text-decoration: none;
+    font-weight: 500;
     &:hover {
       text-decoration: underline;
     }
+  }
+}
+
+/* Responsive ayarlar */
+@media (max-width: 600px) {
+  .login-card {
+    margin: 0 15px;
+    padding: 20px;
+  }
+  mat-card-title {
+    font-size: 1.8em;
   }
 }

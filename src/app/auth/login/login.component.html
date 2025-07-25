@@ -1,25 +1,37 @@
-<mat-card class="login-card">
-  <mat-card-header>
-    <mat-card-title>Giriş Yap</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form (ngSubmit)="onLogin()">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Kullanıcı Adı</mat-label>
-        <input matInput placeholder="Kullanıcı Adınız" [(ngModel)]="credentials.username" name="username" required>
-        <mat-icon matSuffix>person</mat-icon>
-      </mat-form-field>
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Giriş Yap</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Kullanıcı Adı</mat-label>
+          <input matInput formControlName="username" placeholder="Kullanıcı adınızı girin" required>
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched">
+            Kullanıcı adı zorunludur.
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Şifre</mat-label>
-        <input matInput type="password" placeholder="Şifreniz" [(ngModel)]="credentials.password" name="password" required>
-        <mat-icon matSuffix>lock</mat-icon>
-      </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Şifre</mat-label>
+          <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" placeholder="Şifrenizi girin" required>
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+            Şifre zorunludur.
+          </mat-error>
+        </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit" class="full-width login-button">Giriş Yap</button>
-    </form>
-  </mat-card-content>
-  <mat-card-actions class="card-actions">
-    Hesabın yok mu? <a routerLink="/register">Kayıt Ol</a>
-  </mat-card-actions>
-</mat-card>
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" class="full-width login-button">
+          Giriş Yap
+        </button>
+      </form>
+    </mat-card-content>
+    <mat-card-footer class="login-footer">
+      <p>Hesabın yok mu? <a routerLink="/register">Kayıt Ol</a></p>
+    </mat-card-footer>
+  </mat-card>
+</div>

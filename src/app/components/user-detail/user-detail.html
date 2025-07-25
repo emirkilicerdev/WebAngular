@@ -1,0 +1,39 @@
+<p>user-detail works!</p>
+<div class="user-detail-container">
+  <mat-card *ngIf="isLoading" class="loading-card">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Kullanıcı detayları yükleniyor...</p>
+  </mat-card>
+
+  <mat-card *ngIf="!isLoading && user" class="user-detail-card">
+    <mat-card-header>
+      <mat-card-title>{{ user.username }}</mat-card-title>
+      <mat-card-subtitle>{{ user.role }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p><strong>ID:</strong> {{ user.id }}</p>
+      <p><strong>E-posta:</strong> {{ user.email }}</p>
+      <p><strong>Hesap Oluşturulma:</strong> {{ user.createdAt | date:'short' }}</p>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-flat-button color="primary" [routerLink]="['/home/users/edit', user.id]">
+        <mat-icon>edit</mat-icon> Düzenle
+      </button>
+      <button mat-flat-button color="warn">
+        <mat-icon>delete</mat-icon> Sil
+      </button>
+      <button mat-button [routerLink]="['/home/users']">
+        <mat-icon>arrow_back</mat-icon> Geri
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card *ngIf="!isLoading && !user" class="error-card">
+    <mat-card-content>
+      <p>Kullanıcı bulunamadı veya bir hata oluştu.</p>
+      <button mat-flat-button color="accent" [routerLink]="['/home/users']">
+        <mat-icon>list</mat-icon> Kullanıcı Listesi
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>

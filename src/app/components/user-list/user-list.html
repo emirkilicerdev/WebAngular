@@ -1,0 +1,48 @@
+<div class="user-list-container">
+  <mat-card class="user-list-card">
+    <mat-card-header>
+      <mat-card-title>Kullanıcılar</mat-card-title>
+      <div class="header-buttons">
+        <button mat-flat-button color="primary" [routerLink]="['/home/users/new']">
+          <mat-icon>person_add</mat-icon> Yeni Kullanıcı Ekle
+        </button>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="isLoading" class="spinner-container">
+        <mat-spinner></mat-spinner>
+        <p>Kullanıcılar yükleniyor...</p>
+      </div>
+
+      <div *ngIf="errorMessage && !isLoading" class="error-message">
+        <mat-icon color="warn">error</mat-icon>
+        <p>{{ errorMessage }}</p>
+      </div>
+
+      <mat-list *ngIf="!isLoading && users.length > 0">
+        <mat-list-item *ngFor="let user of users">
+          <mat-icon matListItemIcon>person</mat-icon>
+          <div matListItemTitle>
+            <span class="username">{{ user.username }}</span> ({{ user.role }})
+          </div>
+          <div matListItemLine>{{ user.email }}</div>
+          <div matListItemMeta class="user-actions">
+            <button mat-icon-button [routerLink]="['/home/users', user.id]" matTooltip="Detayları Görüntüle">
+              <mat-icon>info</mat-icon>
+            </button>
+            <button mat-icon-button [routerLink]="['/home/users/edit', user.id]" matTooltip="Düzenle">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="confirmDeleteUser(user)" matTooltip="Sil">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-list-item>
+      </mat-list>
+
+      <div *ngIf="!isLoading && users.length === 0 && !errorMessage" class="no-users-message">
+        <p>Henüz kayıtlı kullanıcı yok.</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

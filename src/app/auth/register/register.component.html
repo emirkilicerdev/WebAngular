@@ -1,31 +1,52 @@
-<mat-card class="register-card">
-  <mat-card-header>
-    <mat-card-title>Kayıt Ol</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form (ngSubmit)="onRegister()">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Kullanıcı Adı</mat-label>
-        <input matInput placeholder="Kullanıcı Adınız" [(ngModel)]="user.username" name="username" required>
-        <mat-icon matSuffix>person</mat-icon>
-      </mat-form-field>
+<div class="register-container">
+  <mat-card class="register-card">
+    <mat-card-header>
+      <mat-card-title>Kayıt Ol</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Kullanıcı Adı</mat-label>
+          <input matInput formControlName="username" placeholder="Kullanıcı adınızı girin" required>
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="registerForm.get('username')?.hasError('required') && registerForm.get('username')?.touched">
+            Kullanıcı adı zorunludur.
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>E-posta</mat-label>
-        <input matInput type="email" placeholder="E-posta Adresiniz" [(ngModel)]="user.email" name="email" required>
-        <mat-icon matSuffix>email</mat-icon>
-      </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>E-posta</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="E-posta adresinizi girin" required>
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error *ngIf="registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched">
+            E-posta adresi zorunludur.
+          </mat-error>
+          <mat-error *ngIf="registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched">
+            Geçerli bir e-posta adresi girin.
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Şifre</mat-label>
-        <input matInput type="password" placeholder="Şifreniz" [(ngModel)]="user.password" name="password" required>
-        <mat-icon matSuffix>lock</mat-icon>
-      </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Şifre</mat-label>
+          <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" placeholder="Şifrenizi girin" required>
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched">
+            Şifre zorunludur.
+          </mat-error>
+          <mat-error *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched">
+            Şifre en az 6 karakter olmalıdır.
+          </mat-error>
+        </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit" class="full-width register-button">Kayıt Ol</button>
-    </form>
-  </mat-card-content>
-  <mat-card-actions class="card-actions">
-    Zaten hesabın var mı? <a routerLink="/login">Giriş Yap</a>
-  </mat-card-actions>
-</mat-card>
+        <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid" class="full-width register-button">
+          Kayıt Ol
+        </button>
+      </form>
+    </mat-card-content>
+    <mat-card-footer class="register-footer">
+      <p>Zaten hesabın var mı? <a routerLink="/login">Giriş Yap</a></p>
+    </mat-card-footer>
+  </mat-card>
+</div>

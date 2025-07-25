@@ -1,91 +1,82 @@
-// src/app/auth/register/register.component.ts
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'; // OnInit ekliyoruz
-import { CommonModule } from '@angular/common';
-// Reactive Forms için gerekli import'lar
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-// UserRegistrationDto'ya artık doğrudan ihtiyacımız yok, formun kendisi DTO gibi davranacak
-// import { UserRegistrationDto } from '../../dtos/auth.dtos';
-import { RouterLink, Router } from '@angular/router'; // Router'ı da ekleyelim, başarılı girişte yönlendirme için
-import { MatSnackBar } from '@angular/material/snack-bar'; // Material Snack Bar
+// src/app/components/auth/register/register.component.ts
 
-// Material Modül Importları (Eğer MaterialModule oluşturduysanız)
-import { MaterialModule } from '../../shared/material.module';
-// Veya tek tek importlar:
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'; // ReactiveFormsModule önemli
+import { Router } from '@angular/router'; // Yönlendirme için
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon'; // MatIcon için
+import { MatSnackBar } from '@angular/material/snack-bar'; // Mesaj göstermek için
+import { MatSelectModule } from '@angular/material/select'; // <<< MatSelectModule'ü import edin
+import { MatIcon } from '@angular/material/icon';
+import { AuthService } from '../../services/auth.service'; // Auth Servisiniz
+
+// Backend'deki RegisterModel'in TypeScript karşılığı
+export interface RegisterModel {
+  username: string;
+  email: string;
+  password: string;
+  role?: string; // <<< Role alanını ekleyin, backend'e göre opsiyonel olabilir
+}
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule, // BURADA FormsModule yerine ReactiveFormsModule kullanıyoruz
-    RouterLink,
-    MaterialModule, // Eğer MaterialModule kullanıyorsanız
-    // Eğer MaterialModule kullanmıyorsanız, aşağıdaki modülleri ekleyin:
+    ReactiveFormsModule, // <<< ReactiveFormsModule'ü imports'a ekleyin
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatSelectModule,
+    MatIcon 
   ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit { // OnInit arayüzünü uyguluyoruz
-  registerForm!: FormGroup; // FormGroup tipinde formumuzu tanımlıyoruz
-  hidePassword = true; // Şifre gösterme/gizleme butonu için
+export class RegisterComponent implements OnInit {
+
+  registerForm: FormGroup;
+  roles: string[] = ['User', 'Admin']; // Kullanıcıların seçebileceği roller
+hidePassword: any;
 
   constructor(
-    private fb: FormBuilder, // FormBuilder'ı enjekte ediyoruz
+    private fb: FormBuilder,
     private authService: AuthService,
-    private snackBar: MatSnackBar,
-    private router: Router // Router'ı enjekte ediyoruz
-  ) { }
-
-  ngOnInit(): void {
-    // Formu FormBuilder ile başlatıyoruz
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
     this.registerForm = this.fb.group({
-      username: ['', Validators.required], // Kullanıcı adı zorunlu
-      email: ['', [Validators.required, Validators.email]], // E-posta zorunlu ve geçerli formatta olmalı
-      password: ['', [Validators.required, Validators.minLength(6)]] // Şifre zorunlu ve en az 6 karakter olmalı
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      role: ['User', Validators.required] // <<< 'role' form kontrolünü ekledik ve varsayılan 'User'
     });
   }
 
-  onSubmit(): void { // onRegister yerine onSubmit kullanıyoruz (HTML'e uygun)
+  ngOnInit(): void {
+    // Component yüklendiğinde yapılacaklar (şimdilik boş)
+  }
+
+  onSubmit(): void {
     if (this.registerForm.valid) {
-      // Form geçerliyse API'ye gönder
-      this.authService.register(this.registerForm.value).subscribe({
+      const registerData: RegisterModel = this.registerForm.value;
+
+      this.authService.register(registerData).subscribe({
         next: (response) => {
-          console.log('Kayıt Başarılı:', response);
-          this.snackBar.open(response.message || 'Kayıt başarıyla tamamlandı!', 'Kapat', {
-            duration: 3000,
-            panelClass: ['success-snackbar']
-          });
-          this.registerForm.reset(); // Formu temizle
+          this.snackBar.open('Kayıt başarılı! Giriş yapabilirsiniz.', 'Kapat', { duration: 3000 });
           this.router.navigate(['/login']); // Kayıt sonrası giriş sayfasına yönlendir
         },
         error: (err) => {
-          console.error('Kayıt Hatası:', err);
-          const errorMessage = err.error?.message || err.error || 'Kayıt sırasında bir hata oluştu.';
-          this.snackBar.open(errorMessage, 'Kapat', {
-            duration: 5000,
-            panelClass: ['error-snackbar']
-          });
+          console.error('Kayıt hatası:', err);
+          this.snackBar.open('Kayıt başarısız oldu: ' + (err.error?.message || 'Bilinmeyen Hata'), 'Kapat', { duration: 5000 });
         }
       });
     } else {
-      // Form geçerli değilse, hataları göstermek için tüm alanları işaretle
-      this.registerForm.markAllAsTouched();
-      this.snackBar.open('Lütfen tüm alanları doğru doldurun.', 'Kapat', {
-        duration: 3000,
-        panelClass: ['error-snackbar']
-      });
+      this.snackBar.open('Lütfen tüm alanları doğru doldurun.', 'Kapat', { duration: 3000 });
     }
   }
 }

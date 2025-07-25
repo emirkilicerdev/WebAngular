@@ -1,14 +1,16 @@
-// src/app/home/home.component.ts
+// src/app/components/home/home.component.ts (veya home.ts)
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserListComponent } from '../user-list/user-list'; // UserListComponent'i import et
+import { RouterOutlet } from '@angular/router'; // <<< RouterOutlet KALMALI, çünkü home.html'de kullanılıyor
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
-    UserListComponent // Component'i imports dizisine ekle
+    RouterOutlet, // HomeComponent'in çocuk rotalarını yüklemek için
+    MatCardModule // home.html'de MatCard kullanıldığı için
   ],
   templateUrl: './home.html',
   styleUrls: ['./home.scss']

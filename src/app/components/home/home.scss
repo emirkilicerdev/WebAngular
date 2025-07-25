@@ -1,15 +1,109 @@
-.home-container {
-  padding: 20px;
-  text-align: center;
+/* home.component.scss */
 
-  h1 {
-    color: #3f51b5;
-    margin-bottom: 15px;
+.home-layout {
+  padding: 24px; /* Biraz daha fazla boşluk */
+  max-width: 1280px; /* Geniş ekranlarda daha geniş */
+  margin: 32px auto; /* Üstten ve alttan boşluk, ortala */
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* Bileşenler arası boşluk */
+  box-sizing: border-box; /* Padding'in genişliğe dahil olmasını sağla */
+}
+
+.welcome-card {
+  text-align: center;
+  background-color: white;
+  border-radius: 12px; /* Daha yuvarlak köşeler */
+  padding: 32px; /* İç boşluğu artır */
+  /* mat-elevation-z4 sınıfı zaten HTML'de var, bu CSS tarafından işlenecektir */
+
+  mat-card-header {
+    margin-bottom: 24px; /* Başlık ve içerik arası boşluk */
+    display: block; /* İçeriği ortalamak için */
   }
 
-  p {
-    color: #555;
-    margin-bottom: 30px;
-    font-size: 1.1em;
+  mat-card-title {
+    font-size: 2.5em; /* Daha büyük ve dikkat çekici başlık */
+    color: #3F51B5; /* Material Indigo 500 */
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 8px; /* Başlık ve altındaki açıklama arası boşluk */
+  }
+
+  mat-card-content {
+    p {
+      font-size: 1.2em; /* Daha okunur metin boyutu */
+      color: rgba(0, 0, 0, 0.75); /* Koyu gri, daha iyi kontrast */
+      line-height: 1.6;
+      max-width: 700px; /* Metin genişliğini sınırlayarak okunabilirliği artır */
+      margin: 0 auto; /* Metni ortala */
+    }
+  }
+}
+
+.content-area {
+  flex-grow: 1;
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px; /* Daha yuvarlak köşeler */
+  /* mat-elevation-z2 sınıfı zaten HTML'de var */
+}
+
+.app-footer {
+  text-align: center;
+  padding: 20px;
+  margin-top: 32px; /* Yukarıdan daha fazla boşluk */
+  background-color: #ECEFF1; /* Material Blue Grey 50 - Daha yumuşak bir gri */
+  border-top: 1px solid #D1D9E6; /* Biraz daha belirgin bir çizgi */
+  color: #546E7A; /* Material Blue Grey 700 - Daha koyu metin */
+  font-size: 0.95em;
+  border-radius: 12px; /* Yuvarlak köşeler */
+  /* mat-elevation-z2 sınıfı zaten HTML'de var */
+}
+
+/* Responsive düzenlemeler */
+@media (max-width: 960px) {
+  .home-layout {
+    padding: 20px;
+    gap: 20px;
+  }
+  .welcome-card {
+    padding: 24px;
+    mat-card-title {
+      font-size: 2em;
+    }
+    mat-card-content p {
+      font-size: 1.1em;
+    }
+  }
+  .content-area {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-layout {
+    padding: 16px;
+    margin: 24px auto;
+    gap: 16px;
+  }
+  .welcome-card {
+    padding: 16px;
+    border-radius: 8px;
+    mat-card-title {
+      font-size: 1.8em;
+    }
+    mat-card-content p {
+      font-size: 1em;
+    }
+  }
+  .content-area {
+    padding: 16px;
+    border-radius: 8px;
+  }
+  .app-footer {
+    padding: 15px;
+    margin-top: 24px;
+    border-radius: 8px;
   }
 }

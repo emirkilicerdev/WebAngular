@@ -10,7 +10,7 @@ import { UserDetail, UserCreate, UserUpdate } from '../dtos/user.dtos'; // Kulla
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://localhost:5209/api/Users'; // Kullanıcı API'sinin base URL'si
+  private baseUrl = 'http://localhost:5209/api/User'; // Kullanıcı API'sinin base URL'si
 
   constructor(private http: HttpClient) { }
 

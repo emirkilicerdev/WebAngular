@@ -1,0 +1,179 @@
+/* src/app/components/user-detail/user-detail.component.scss */
+
+.user-detail-container {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.loading-card,
+.user-detail-card,
+.error-card {
+  max-width: 600px;
+  width: 100%;
+  border-radius: 12px; /* Yuvarlak köşeler */
+  background-color: white;
+  padding: 24px;
+  box-sizing: border-box;
+  text-align: center; /* Spinner ve mesajı ortala */
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12); /* mat-elevation-z4 değeri */
+}
+
+.loading-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px; /* Yükleme kartının minimum yüksekliği */
+  p {
+    margin-top: 16px;
+    font-size: 1.1em;
+    color: var(--color-text-secondary);
+  }
+}
+
+.user-detail-card {
+  /* Gölge yukarıda .loading-card, .user-detail-card, .error-card için tanımlandı */
+
+  mat-card-header {
+    display: block; /* Başlık ve altyazıyı alt alta getir */
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--color-grey-200);
+
+    mat-card-title {
+      font-size: 2.2em;
+      font-weight: 500;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+    }
+
+    mat-card-subtitle {
+      font-size: 1.1em;
+      color: var(--color-text-secondary);
+    }
+  }
+
+  mat-card-content {
+    text-align: left; /* İçerik metnini sola hizala */
+    margin-bottom: 24px;
+
+    p {
+      font-size: 1.1em;
+      line-height: 1.8;
+      color: var(--color-text-primary);
+      margin-bottom: 8px;
+
+      strong {
+        color: var(--color-text-primary);
+        margin-right: 8px;
+      }
+    }
+  }
+
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-end; /* Butonları sağa hizala */
+    gap: 12px; /* Butonlar arası boşluk */
+    padding-top: 16px;
+    border-top: 1px solid var(--color-grey-200);
+
+    button {
+      border-radius: 8px; /* Yuvarlak buton köşeleri */
+      padding: 0 16px;
+      height: 40px;
+      font-size: 0.95em;
+      font-weight: 500;
+      display: inline-flex; /* İkon ve metni hizala */
+      align-items: center;
+      gap: 8px; /* İkon ve metin arası boşluk */
+
+      &.mat-flat-button.mat-primary {
+        background-color: var(--color-primary);
+        color: var(--color-text-light-primary);
+        &:hover {
+          background-color: var(--color-primary-dark);
+        }
+      }
+
+      &.mat-flat-button.mat-warn {
+        background-color: var(--color-warn);
+        color: var(--color-text-light-primary);
+        &:hover {
+          background-color: #D32F2F; /* Kırmızı rengin daha koyu tonu (Material Red 700) */
+        }
+      }
+
+      &.mat-button { /* Geri butonu için */
+        color: var(--color-text-secondary);
+        &:hover {
+          background-color: var(--color-grey-100);
+        }
+      }
+
+      mat-icon {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.error-card {
+  /* Gölge yukarıda .loading-card, .user-detail-card, .error-card için tanımlandı */
+  p {
+    font-size: 1.1em;
+    color: var(--color-warn);
+    margin-bottom: 20px;
+  }
+  button {
+    background-color: var(--color-accent);
+    color: var(--color-text-light-primary);
+    border-radius: 8px;
+    padding: 0 16px;
+    height: 40px;
+    font-size: 0.95em;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    &:hover {
+      background-color: var(--color-accent-dark);
+    }
+  }
+}
+
+/* Responsive düzenlemeler */
+@media (max-width: 600px) {
+  .user-detail-container {
+    padding: 16px;
+  }
+
+  .loading-card,
+  .user-detail-card,
+  .error-card {
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .user-detail-card {
+    mat-card-header {
+      mat-card-title {
+        font-size: 1.8em;
+      }
+      mat-card-subtitle {
+        font-size: 1em;
+      }
+    }
+    mat-card-content p {
+      font-size: 1em;
+    }
+    mat-card-actions {
+      flex-direction: column; /* Butonları alt alta sırala */
+      gap: 10px;
+      button {
+        width: 100%; /* Tam genişlikte yap */
+      }
+    }
+  }
+}

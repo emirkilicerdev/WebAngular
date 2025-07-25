@@ -19,7 +19,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'; // SnackBar iç
     RouterOutlet,
     RouterLink, // routerLink directive'i için
     MatToolbarModule,
-    MatButtonModule,
+    MatButtonModule,  
     MatIconModule,
     MatSnackBarModule // Eğer App Component'te snackbar kullanıyorsanız
   ],

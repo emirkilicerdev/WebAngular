@@ -1,0 +1,107 @@
+/* src/app/components/user-form/user-form.component.scss */
+
+.user-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Kartı yukarı hizala, dikeyde ortalama */
+  padding: 24px;
+  box-sizing: border-box;
+  min-height: calc(100vh - 64px - 40px); /* Toolbar ve footer yüksekliğini düşerek kalan alanı kapla */
+  /* Bu min-height, app.component.scss'deki toolbar ve footer yüksekliklerine göre ayarlanmalı */
+}
+
+.user-form-card {
+  max-width: 600px;
+  width: 100%;
+  border-radius: 12px; /* Yuvarlak köşeler */
+  background-color: white;
+  padding: 32px; /* İç boşluğu artır */
+  box-sizing: border-box;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12); /* mat-elevation-z4 değeri */
+
+  mat-card-header {
+    margin-bottom: 24px;
+    justify-content: center; /* Başlığı ortala */
+    display: block; /* İçeriği ortalamak için */
+  }
+
+  mat-card-title {
+    font-size: 2.2em;
+    font-weight: 500;
+    color: var(--color-primary);
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Form alanları arası boşluk */
+  }
+
+  mat-form-field {
+    width: 100%;
+    /* appearance="outline" olduğu için varsayılan Material stillerini kullanır */
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end; /* Butonları sağa hizala */
+    gap: 12px; /* Butonlar arası boşluk */
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-grey-200);
+
+    button {
+      border-radius: 8px; /* Yuvarlak buton köşeleri */
+      padding: 0 16px;
+      height: 40px;
+      font-size: 0.95em;
+      font-weight: 500;
+      display: inline-flex; /* İkon ve metni hizala */
+      align-items: center;
+      gap: 8px; /* İkon ve metin arası boşluk */
+
+      &.mat-flat-button.mat-primary {
+        background-color: var(--color-primary);
+        color: var(--color-text-light-primary);
+        &:hover {
+          background-color: var(--color-primary-dark);
+        }
+      }
+
+      &.mat-button { /* İptal butonu için */
+        color: var(--color-text-secondary);
+        &:hover {
+          background-color: var(--color-grey-100);
+        }
+      }
+
+      mat-icon {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+/* Responsive düzenlemeler */
+@media (max-width: 600px) {
+  .user-form-container {
+    padding: 16px;
+  }
+
+  .user-form-card {
+    padding: 20px;
+    border-radius: 8px;
+    
+    mat-card-title {
+      font-size: 1.8em;
+    }
+
+    .form-actions {
+      flex-direction: column; /* Butonları alt alta sırala */
+      gap: 10px;
+      button {
+        width: 100%; /* Tam genişlikte yap */
+      }
+    }
+  }
+}

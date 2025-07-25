@@ -2,63 +2,71 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Tam ekran yüksekliği */
-  background: linear-gradient(to right, #6a11cb, #2575fc); /* Hoş bir gradyan arka plan */
+  min-height: 100vh;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
   padding: 20px;
-  box-sizing: border-box; /* Padding'in kutu boyutunu etkilememesi için */
+  box-sizing: border-box;
 }
 
-.register-card {
-  max-width: 400px; /* Formun maksimum genişliği */
+mat-card.register-card {
+  max-width: 400px;
   width: 100%;
   padding: 30px;
-  border-radius: 12px; /* Köşeleri daha yuvarlak */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Daha belirgin bir gölge */
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
   text-align: center;
-  background-color: #fff; /* Beyaz kart arka planı */
+  background-color: #fff;
 }
 
 mat-card-title {
-  font-size: 2em; /* Başlık boyutunu büyüt */
+  font-size: 2rem;
   margin-bottom: 20px;
-  color: #3f51b5; /* Angular Material primary rengi */
-}
-
-.full-width {
-  width: 100%;
-  margin-bottom: 15px; /* Inputlar arasında boşluk */
-}
-
-.register-button {
-  margin-top: 20px;
-  padding: 10px 0; /* Buton yüksekliğini artır */
-  font-size: 1.1em;
+  color: #3f51b5;
   font-weight: 600;
-  border-radius: 8px; /* Buton köşeleri yuvarlak */
+}
+
+mat-form-field.full-width {
+  width: 100%;
+  margin-bottom: 15px;
+
+  // Daha geniş input alanları için
+  .mat-form-field-flex {
+    padding: 0 12px;
+  }
+}
+
+button.mat-raised-button.register-button {
+  margin-top: 20px;
+  padding: 10px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
 }
 
 .register-footer {
   margin-top: 25px;
-  font-size: 0.9em;
+  font-size: 0.9rem;
   color: #555;
 
   a {
     color: #3f51b5;
-    text-decoration: none;
     font-weight: 500;
+    text-decoration: none;
+
     &:hover {
       text-decoration: underline;
     }
   }
 }
 
-/* Responsive ayarlar */
+/* Responsive */
 @media (max-width: 600px) {
-  .register-card {
-    margin: 0 15px; /* Küçük ekranlarda kenarlardan boşluk bırak */
+  mat-card.register-card {
+    margin: 0 15px;
     padding: 20px;
   }
+
   mat-card-title {
-    font-size: 1.8em;
+    font-size: 1.8rem;
   }
 }

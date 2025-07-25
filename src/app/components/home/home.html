@@ -1,5 +1,10 @@
-<div class="home-container">
-  <h1>Hoş Geldiniz!</h1>
-  <p>Bu, uygulamanızın ana sayfasıdır. Aşağıda kayıtlı kullanıcıları görebilirsiniz:</p>
+<div class="home-layout">
 
-  <app-user-list></app-user-list> </div>
+  <main class="content-area mat-elevation-z2">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="app-footer mat-elevation-z2">
+    <p>&copy; 2025 Kullanıcı Yönetimi Uygulaması</p>
+  </footer>
+</div>

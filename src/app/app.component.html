@@ -1,11 +1,16 @@
 <div class="app-container">
   <mat-toolbar color="primary">
-    <span>IK</span>
+    <span class="app-title">IK Yönetim Sistemi</span>
     <span class="spacer"></span>
-    <a mat-button routerLink="/">Ana Sayfa</a> <a mat-button routerLink="/register" *ngIf="!(isLoggedIn$ | async)">Kayıt Ol</a>
-    <a mat-button routerLink="/login" *ngIf="!(isLoggedIn$ | async)">Giriş Yap</a>
+    <a mat-button routerLink="/home" routerLinkActive="active-link">Ana Sayfa</a>
+    <a mat-button routerLink="/register" *ngIf="!(isLoggedIn$ | async)" routerLinkActive="active-link">Kayıt Ol</a>
+    <a mat-button routerLink="/login" *ngIf="!(isLoggedIn$ | async)" routerLinkActive="active-link">Giriş Yap</a>
+
     <button mat-button (click)="onLogout()" *ngIf="isLoggedIn$ | async">Çıkış Yap</button>
   </mat-toolbar>
 
-  <router-outlet></router-outlet>
+  <main class="content-wrapper">
+    <router-outlet></router-outlet> </main>
+
+  
 </div>

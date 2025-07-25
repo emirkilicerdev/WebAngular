@@ -14,15 +14,17 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   {
     path: 'home',
-    component: HomeComponent,
-    canActivate: [authGuard], // Ana sayfa korumalı
+    component: HomeComponent, // HomeComponent buraya yüklenecek
+    canActivate: [authGuard],
     children: [
-      { path: 'users', component: UserListComponent }, // Kullanıcı listesi için alt route
-      { path: 'users/new', component: UserFormComponent }, // Yeni kullanıcı ekleme
-      { path: 'users/edit/:id', component: UserFormComponent }, // Kullanıcı düzenleme (ID ile)
-      { path: 'users/:id', component: UserDetailComponent } // Kullanıcı detayı (ID ile)
+      // /home adresine gidildiğinde varsayılan olarak /home/users adresine yönlendir.
+      // Bu sayede HomeComponent yüklendiğinde UserListComponent otomatik olarak görünür.
+      { path: '', redirectTo: 'users', pathMatch: 'full' },
+      { path: 'users', component: UserListComponent },
+      { path: 'users/new', component: UserFormComponent },
+      { path: 'users/edit/:id', component: UserFormComponent },
+      { path: 'users/:id', component: UserDetailComponent }
     ]
   },
-  // Korumalı olmayan başka sayfalar varsa buraya ekleyin
-  { path: '**', redirectTo: '/home' } // Tanımsız yollar için yönlendirme
+  { path: '**', redirectTo: '/home' }
 ];

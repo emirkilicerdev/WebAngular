@@ -7,3 +7,12 @@
     font-weight: 500;
     color: #007bff; /* Mavi renk (Bootstrap primary mavisi gibi) */
   } 
+
+ .username-display { /* Kullanıcı adı için yeni stil */
+    font-weight: 500;
+    color: #555; /* Biraz daha koyu gri */
+    margin: 0 16px; /* Butonlardan ve başlıktan boşluk */
+    white-space: nowrap; /* Tek satırda kalmasını sağla */
+    overflow: hidden; /* Taşmayı gizle */
+    text-overflow: ellipsis; 
+ }

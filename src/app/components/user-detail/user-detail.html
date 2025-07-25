@@ -15,10 +15,10 @@
       <p><strong>Hesap Oluşturulma:</strong> {{ user.createdAt | date:'short' }}</p>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-flat-button color="primary" [routerLink]="['/home/users/edit', user.id]">
+      <button mat-flat-button color="primary" [routerLink]="['/home/users/edit', user.id]" *ngIf="isAdmin">
         <mat-icon>edit</mat-icon> Düzenle
       </button>
-      <button mat-flat-button color="warn">
+      <button mat-flat-button color="warn" *ngIf="isAdmin">
         <mat-icon>delete</mat-icon> Sil
       </button>
       <button mat-button [routerLink]="['/home/users']">

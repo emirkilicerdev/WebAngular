@@ -9,6 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserDetail } from '../../dtos/user.dtos'; // UserDetail interface'i
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-user-detail',
@@ -28,6 +29,8 @@ export class UserDetailComponent implements OnInit {
   user: UserDetail | null = null;
   isLoading = true;
   userId: number | null = null;
+  authService: any;
+  isAdmin: boolean = false; // 
 
   constructor(
     private route: ActivatedRoute,
@@ -44,6 +47,12 @@ export class UserDetailComponent implements OnInit {
       } else {
         this.snackBar.open('Kullanıcı ID\'si bulunamadı.', 'Kapat', { duration: 3000 });
         this.isLoading = false;
+
+        this.authService.currentUserRole$.pipe(
+              map(role => role === 'Admin')
+            ).subscribe(isAdmin => {
+              this.isAdmin = isAdmin;
+            });
       }
     });
   }

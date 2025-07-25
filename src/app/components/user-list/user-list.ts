@@ -10,6 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router'; // routerLink direktifi için
 import { MatButtonModule } from '@angular/material/button'; // Butonlar için
 import { UserDetail } from '../../dtos/user.dtos'; // Kullanıcı detay DTO'su
+import { AuthService } from '../../services/auth.service';
+import { map } from 'rxjs/operators'; // <<< Bu satır eklendi veya güncellendi!
 
 // Dialog modülü ve servisi
 import { MatDialog } from '@angular/material/dialog';
@@ -34,15 +36,23 @@ export class UserListComponent implements OnInit {
   users: UserDetail[] = [];
   isLoading = true;
   errorMessage: string | null = null;
+  isAdmin = false; // Kullanıcının admin olup olmadığını kontrol etmek için
+  
 
   constructor(
     private userService: UserService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog // MatDialog'ı enjekte edin
+    private dialog: MatDialog,
+    private authService: AuthService 
   ) { }
 
   ngOnInit(): void {
     this.getAllUsers();
+    this.authService.currentUserRole$.pipe(
+      map(role => role === 'Admin')
+    ).subscribe(isAdmin => {
+      this.isAdmin = isAdmin;
+    });
   }
 
   getAllUsers(): void {
@@ -59,7 +69,6 @@ export class UserListComponent implements OnInit {
         this.isLoading = false;
         const displayMessage = err.message || 'Kullanıcılar yüklenirken bir hata oluştu.';
         this.errorMessage = displayMessage;
-        this.snackBar.open(displayMessage, 'Kapat', { duration: 5000, panelClass: ['error-snackbar'] });
       }
     });
   }
@@ -76,7 +85,6 @@ export class UserListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Kullanıcı onayladı, silme işlemini yap
         this.deleteUser(user.id);
       }
     });

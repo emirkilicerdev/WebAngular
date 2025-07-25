@@ -1,7 +1,15 @@
 <div class="app-container">
-  <mat-toolbar color="primary">
+  <mat-toolbar>
     <span class="app-title">IK Yönetim Sistemi</span>
     <span class="spacer"></span>
+    
+    <!-- Kullanıcı adı burada gösterilecek -->
+    <span *ngIf="isLoggedIn$ | async" class="username-display">
+      Hoş Geldin, {{ currentUsername$ | async }}!
+    </span>
+
+    <span class="spacer"></span>
+
     <a mat-button routerLink="/home" routerLinkActive="active-link">Ana Sayfa</a>
     <a mat-button routerLink="/register" *ngIf="!(isLoggedIn$ | async)" routerLinkActive="active-link">Kayıt Ol</a>
     <a mat-button routerLink="/login" *ngIf="!(isLoggedIn$ | async)" routerLinkActive="active-link">Giriş Yap</a>
@@ -10,7 +18,11 @@
   </mat-toolbar>
 
   <main class="content-wrapper">
-    <router-outlet></router-outlet> </main>
+    <router-outlet></router-outlet>
+  </main>
 
-  
+  <!-- Footer'ı app.component.html'de tutmaya devam ediyorsanız -->
+  <footer class="app-footer">
+    <p>&copy; 2025 Kullanıcı Yönetimi Uygulaması</p>
+  </footer>
 </div>

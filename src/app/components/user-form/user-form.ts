@@ -81,7 +81,6 @@ export class UserFormComponent implements OnInit {
           username: user.username,
           email: user.email,
           role: user.role
-          // Şifre hash'i frontend'e gelmediği için doldurmuyoruz
         });
       },
       error: (err) => {

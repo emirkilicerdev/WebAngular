@@ -3,9 +3,10 @@
     <mat-card-header>
       <mat-card-title>Kullanıcılar</mat-card-title>
       <div class="header-buttons">
-        <button mat-flat-button color="primary" [routerLink]="['/home/users/new']">
-          <mat-icon>person_add</mat-icon> Yeni Kullanıcı Ekle
-        </button>
+       <button mat-flat-button color="primary" [routerLink]="['/home/users/new']" *ngIf="isAdmin">
+        <mat-icon>person_add</mat-icon> Yeni Kullanıcı Ekle
+      </button>
+
       </div>
     </mat-card-header>
     <mat-card-content>
@@ -30,10 +31,10 @@
             <button mat-icon-button [routerLink]="['/home/users', user.id]" matTooltip="Detayları Görüntüle">
               <mat-icon>info</mat-icon>
             </button>
-            <button mat-icon-button [routerLink]="['/home/users/edit', user.id]" matTooltip="Düzenle">
+            <button mat-icon-button [routerLink]="['/home/users/edit', user.id]" matTooltip="Düzenle" *ngIf="isAdmin">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="confirmDeleteUser(user)" matTooltip="Sil">
+            <button mat-icon-button color="warn" (click)="confirmDeleteUser(user)" matTooltip="Sil" *ngIf="isAdmin">
               <mat-icon>delete</mat-icon>
             </button>
           </div>

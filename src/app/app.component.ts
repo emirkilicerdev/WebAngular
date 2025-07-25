@@ -1,15 +1,11 @@
 // src/app/app.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, RouterLink, Router } from '@angular/router'; // Router'ı ekledik
-import { AuthService } from './services/auth.service'; // AuthService'i import et
-import { Observable } from 'rxjs'; // Observable için
-
-// Material Modül Importları (Header/Navbar için)
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBarModule } from '@angular/material/snack-bar'; // SnackBar için
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router'; // RouterLinkActive eklendi
+import { MatToolbarModule } from '@angular/material/toolbar'; // MatToolbarModule eklendi
+import { MatButtonModule } from '@angular/material/button'; // MatButtonModule eklendi
+import { AuthService } from './services/auth.service'; // AuthService'inizin yolu
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -17,32 +13,24 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'; // SnackBar iç
   imports: [
     CommonModule,
     RouterOutlet,
-    RouterLink, // routerLink directive'i için
-    MatToolbarModule,
-    MatButtonModule,  
-    MatIconModule,
-    MatSnackBarModule // Eğer App Component'te snackbar kullanıyorsanız
+    RouterLink,
+    RouterLinkActive, // routerLinkActive için
+    MatToolbarModule, // mat-toolbar için
+    MatButtonModule   // mat-button için
   ],
-  templateUrl: './app.component.html', // HTML'i ayrı dosyadan alacağız
+  templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  title = 'AngularWebAPIAuth';
-  isLoggedIn$: Observable<boolean>; // Giriş durumunu Observable olarak tutacak
+export class AppComponent {
+  isLoggedIn$: Observable<boolean>;
+  currentUsername$: Observable<string | null>; // Kullanıcı adını tutacak Observable
 
-  constructor(private authService: AuthService, private router: Router) {
-    // AuthService'ten isLoggedIn$ Observable'ını al
+  constructor(private authService: AuthService) {
     this.isLoggedIn$ = this.authService.isLoggedIn$;
+    this.currentUsername$ = this.authService.currentUsername$; // AuthService'den kullanıcı adını al
   }
 
-  ngOnInit(): void {
-    // Başlangıçta yapılacak işlemler
-  }
-
-  // Çıkış yapma metodu
   onLogout(): void {
     this.authService.logout();
-    // AuthService içinde logout zaten yönlendirme yaptığı için burada ayrıca yönlendirme yapmaya gerek yok
-    // this.router.navigate(['/login']); // Eğer AuthService yönlendirme yapmıyorsa
   }
 }

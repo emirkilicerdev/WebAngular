@@ -1,0 +1,73 @@
+<div class="role-management-container">
+  <mat-card class="role-management-card">
+    <mat-card-header>
+      <mat-card-title>Rol Yönetimi</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <!-- Spinner -->
+      <div *ngIf="isLoading" class="spinner-container">
+        <mat-spinner></mat-spinner>
+        <p>Roller yükleniyor...</p>
+      </div>
+
+      <!-- Hata Mesajı -->
+      <div *ngIf="errorMessage && !isLoading" class="error-message">
+        <mat-icon color="warn">error</mat-icon>
+        <p>{{ errorMessage }}</p>
+        <button mat-flat-button color="primary" (click)="loadRoles()">
+          <mat-icon>refresh</mat-icon> Tekrar Dene
+        </button>
+      </div>
+
+      <!-- Form -->
+      <div *ngIf="!isLoading && !errorMessage">
+        <form [formGroup]="roleForm" (ngSubmit)="onSubmit()" class="role-form">
+          <mat-form-field appearance="outline">
+            <mat-label>Rol Adı</mat-label>
+            <input matInput formControlName="name" required />
+            <mat-error *ngIf="roleForm.get('name')?.invalid && roleForm.get('name')?.touched">
+              Rol adı gerekli.
+            </mat-error>
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-flat-button color="primary" type="submit" [disabled]="roleForm.invalid">
+              <mat-icon>{{ isEditMode ? 'save' : 'add' }}</mat-icon>
+              {{ isEditMode ? 'Rolü Kaydet' : 'Yeni Rol Oluştur' }}
+            </button>
+            <button mat-button type="button" (click)="resetForm()" *ngIf="isEditMode">
+              <mat-icon>cancel</mat-icon> İptal
+            </button>
+          </div>
+        </form>
+
+        <mat-divider></mat-divider>
+
+        <!-- Roller Listesi -->
+        <h3 class="list-title">Mevcut Roller</h3>
+        <div *ngIf="roles.length === 0" class="no-roles-message">
+          <p>Henüz kayıtlı rol bulunmamaktadır.</p>
+        </div>
+
+        <div class="role-list" *ngIf="roles.length > 0">
+          <div class="role-list-item" *ngFor="let role of roles">
+            <mat-icon class="icon">vpn_key</mat-icon>
+            <div class="details">
+              <div class="role-name">{{ role.name }}</div>
+              <div class="role-id">ID: {{ role.id }}</div>
+            </div>
+            <div class="role-actions">
+              <button mat-icon-button color="primary" (click)="editRole(role)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="confirmDeleteRole(role)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

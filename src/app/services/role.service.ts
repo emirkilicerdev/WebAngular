@@ -1,57 +1,47 @@
-// src/app/services/user.service.ts
+// src/app/services/role.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { UserDetailDto, UserCreateDto, UserUpdateDto, ApiResponse } from '../dtos/user.dtos'; // DTO'lar user.dtos'tan import edildi
+import { RoleDto, RoleCreateDto, RoleUpdateDto } from '../dtos/role.dtos';
+import { ApiResponse } from '../dtos/user.dtos'; // Genel ApiResponse yapısını kullanıyoruz
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
-  private baseUrl = 'http://localhost:5209/api/User';
+export class RoleService {
+  private baseUrl = 'http://localhost:5209/api/Role';
 
   constructor(private http: HttpClient) { }
 
-  getAllUsers(): Observable<UserDetailDto[]> {
-    return this.http.get<UserDetailDto[]>(`${this.baseUrl}/all`).pipe(
+  getAllRoles(): Observable<RoleDto[]> {
+    return this.http.get<RoleDto[]>(`${this.baseUrl}/all`).pipe(
       catchError(this.handleError)
     );
   }
 
-  getUserById(id: number): Observable<UserDetailDto> {
-    return this.http.get<UserDetailDto>(`${this.baseUrl}/${id}`).pipe(
+  createRole(role: RoleCreateDto): Observable<RoleDto> {
+    return this.http.post<RoleDto>(this.baseUrl, role).pipe(
       catchError(this.handleError)
     );
   }
 
-  createUser(user: UserCreateDto): Observable<UserDetailDto> {
-    return this.http.post<UserDetailDto>(this.baseUrl, user).pipe(
+  updateRole(id: number, role: RoleUpdateDto): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${id}`, role).pipe(
       catchError(this.handleError)
     );
   }
 
-  updateUser(id: number, user: UserUpdateDto): Observable<UserDetailDto> { // Backend artık güncellenmiş objeyi döndürüyor
-    return this.http.put<UserDetailDto>(`${this.baseUrl}/${id}`, user).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  deleteUser(id: number): Observable<void> {
+  deleteRole(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`).pipe(
       catchError(this.handleError)
     );
   }
-
-  getCurrentUserProfile(): Observable<UserDetailDto> {
-    return this.http.get<UserDetailDto>(`${this.baseUrl}/profile`).pipe(
-      catchError(this.handleError)
-    );
-  }
+  
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let displayMessage: string;
-    console.error('API Hatası:', error);
+    console.error('API Hatası (RoleService):', error);
 
     if (error.error instanceof ErrorEvent) {
       displayMessage = `Bir hata oluştu: ${error.error.message}`;

@@ -1,3 +1,4 @@
+<!-- src/app/components/user-form/user-form.html -->
 <div class="user-form-container">
   <mat-card class="user-form-card">
     <mat-card-header>
@@ -23,21 +24,22 @@
 
         <mat-form-field appearance="outline" *ngIf="!isEditMode">
           <mat-label>Şifre</mat-label>
-          <input matInput formControlName="password" type="password" required>
+          <input matInput formControlName="password" type="password" [required]="!isEditMode">
           <mat-error *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched">
             Şifre gerekli.
           </mat-error>
         </mat-form-field>
 
+        <!-- Rol seçimi: Çoklu seçim için multiple özelliği eklendi -->
         <mat-form-field appearance="outline">
-          <mat-label>Rol</mat-label>
-          <mat-select formControlName="role" required>
-            <mat-option *ngFor="let role of roles" [value]="role">
-              {{ role }}
+          <mat-label>Roller</mat-label>
+          <mat-select formControlName="roleIds" multiple required>
+            <mat-option *ngFor="let role of roles" [value]="role.id">
+              {{ role.name }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="userForm.get('role')?.invalid && userForm.get('role')?.touched">
-            Rol seçimi gerekli.
+          <mat-error *ngIf="userForm.get('roleIds')?.invalid && userForm.get('roleIds')?.touched">
+            En az bir rol seçimi gerekli.
           </mat-error>
         </mat-form-field>
 
@@ -45,7 +47,7 @@
           <button mat-flat-button color="primary" type="submit" [disabled]="userForm.invalid">
             <mat-icon>{{ isEditMode ? 'save' : 'add' }}</mat-icon> {{ isEditMode ? 'Kaydet' : 'Oluştur' }}
           </button>
-          <button mat-button type="button" [routerLink]="['../user-list/user-list']">
+          <button mat-button type="button" [routerLink]="['/home/users']">
             <mat-icon>cancel</mat-icon> İptal
           </button>
         </div>

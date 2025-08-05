@@ -1,0 +1,63 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+}
+
+mat-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+mat-card-title {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.subtitle {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 16px;
+  color: #555;
+}
+
+.role-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+button[mat-raised-button] {
+  min-width: 240px;
+  padding: 12px 24px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 40px 0;
+  color: #555;
+}
+
+.no-role {
+  text-align: center;
+  color: #888;
+  margin-top: 20px;
+}

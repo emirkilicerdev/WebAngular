@@ -1,0 +1,28 @@
+<mat-card>
+  <mat-card-title>Rol Seçimi</mat-card-title>
+  <mat-card-content>
+    <div *ngIf="isLoading" class="spinner-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Roller yükleniyor...</p>
+    </div>
+
+    <div *ngIf="!isLoading && roles.length > 0" class="role-list">
+      <p class="subtitle">Lütfen kullanmak istediğiniz rolü seçin:</p>
+      <div class="role-buttons">
+        <button
+          *ngFor="let role of roles"
+          mat-raised-button
+          color="primary"
+          (click)="selectRole(role)"
+        >
+          <mat-icon>vpn_key</mat-icon>
+          {{ role }}
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading && roles.length === 0" class="no-role">
+      <p>Seçilebilecek rol bulunamadı.</p>
+    </div>
+  </mat-card-content>
+</mat-card>

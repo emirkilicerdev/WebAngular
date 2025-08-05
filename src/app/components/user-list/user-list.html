@@ -1,12 +1,11 @@
 <div class="user-list-container">
   <mat-card class="user-list-card">
     <mat-card-header>
-      <mat-card-title>Kullanıcılar</mat-card-title>
+      <mat-card-title>Kullanıcı Listesi</mat-card-title>
       <div class="header-buttons">
-       <button mat-flat-button color="primary" [routerLink]="['/home/users/new']" *ngIf="isAdmin">
-        <mat-icon>person_add</mat-icon> Yeni Kullanıcı Ekle
-      </button>
-
+        <button mat-flat-button color="primary" [routerLink]="['/home/users/new']" *ngIf="authService.isAdmin$ | async">
+          <mat-icon>person_add</mat-icon> Yeni Kullanıcı Ekle
+        </button>
       </div>
     </mat-card-header>
     <mat-card-content>
@@ -20,30 +19,27 @@
         <p>{{ errorMessage }}</p>
       </div>
 
-      <mat-list *ngIf="!isLoading && users.length > 0">
-        <mat-list-item *ngFor="let user of users">
+      <div *ngIf="!isLoading && !errorMessage && users.length === 0" class="no-users-message">
+        <p>Henüz kayıtlı kullanıcı bulunmamaktadır.</p>
+      </div>
+
+      <mat-list *ngIf="!isLoading && !errorMessage && users.length > 0">
+        <mat-list-item *ngFor="let user of users" class="mat-list-item">
           <mat-icon matListItemIcon>person</mat-icon>
-          <div matListItemTitle>
-            <span class="username">{{ user.username }}</span> ({{ user.role }})
-          </div>
+          <div matListItemTitle class="username">{{ user.username }}</div>
           <div matListItemLine>{{ user.email }}</div>
-          <div matListItemMeta class="user-actions">
-            <button mat-icon-button [routerLink]="['/home/users', user.id]" matTooltip="Detayları Görüntüle">
-              <mat-icon>info</mat-icon>
-            </button>
-            <button mat-icon-button [routerLink]="['/home/users/edit', user.id]" matTooltip="Düzenle" *ngIf="isAdmin">
+          <!-- Rolleri virgülle ayrılmış bir string olarak göster -->
+          <div matListItemLine>Roller: {{ user.roles.join(', ') }}</div>
+          <div class="user-actions">
+            <button mat-icon-button color="primary" [routerLink]="['/home/users/edit', user.id]" *ngIf="authService.isAdmin$ | async">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="confirmDeleteUser(user)" matTooltip="Sil" *ngIf="isAdmin">
+            <button mat-icon-button color="warn" (click)="confirmDeleteUser(user)" *ngIf="authService.isAdmin$ | async">
               <mat-icon>delete</mat-icon>
             </button>
           </div>
         </mat-list-item>
       </mat-list>
-
-      <div *ngIf="!isLoading && users.length === 0 && !errorMessage" class="no-users-message">
-        <p>Henüz kayıtlı kullanıcı yok.</p>
-      </div>
     </mat-card-content>
   </mat-card>
 </div>

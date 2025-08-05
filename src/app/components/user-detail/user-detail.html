@@ -1,38 +1,42 @@
+<!-- src/app/components/user-detail/user-detail.html -->
 <div class="user-detail-container">
-  <mat-card *ngIf="isLoading" class="loading-card">
-    <mat-spinner diameter="50"></mat-spinner>
-    <p>Kullanıcı detayları yükleniyor...</p>
-  </mat-card>
-
-  <mat-card *ngIf="!isLoading && user" class="user-detail-card">
+  <mat-card class="user-detail-card">
     <mat-card-header>
-      <mat-card-title>{{ user.username }}</mat-card-title>
-      <mat-card-subtitle>{{ user.role }}</mat-card-subtitle>
+      <mat-card-title>Kullanıcı Detayları</mat-card-title>
+      <!-- Kullanıcının rolünü burada gösterelim -->
+      <mat-card-subtitle *ngIf="user && user.roles && user.roles.length > 0">Roller: {{ user.roles.join(', ') }}</mat-card-subtitle>
+      <mat-card-subtitle *ngIf="user && (!user.roles || user.roles.length === 0)">Rol bilgisi yok</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p><strong>ID:</strong> {{ user.id }}</p>
-      <p><strong>E-posta:</strong> {{ user.email }}</p>
-      <p><strong>Hesap Oluşturulma:</strong> {{ user.createdAt | date:'short' }}</p>
+      <div *ngIf="isLoading" class="loading-card">
+        <mat-spinner></mat-spinner>
+        <p>Kullanıcı bilgileri yükleniyor...</p>
+      </div>
+
+      <div *ngIf="!isLoading && !user" class="error-card">
+        <p>Kullanıcı bulunamadı veya bir hata oluştu.</p>
+        <button mat-flat-button color="accent" [routerLink]="['/home/users']">
+          <mat-icon>arrow_back</mat-icon> Kullanıcı Listesine Dön
+        </button>
+      </div>
+
+      <div *ngIf="user && !isLoading" class="user-details">
+        <p><strong><mat-icon>person</mat-icon> Kullanıcı Adı:</strong> {{ user.username }}</p>
+        <p><strong><mat-icon>email</mat-icon> E-posta:</strong> {{ user.email }}</p>
+        <p><strong><mat-icon>event</mat-icon> Kayıt Tarihi:</strong> {{ user.createdAt | date:'short' }}</p>
+        <!-- Diğer detaylar buraya eklenebilir -->
+      </div>
     </mat-card-content>
-    <mat-card-actions align="end">
+    <mat-card-actions *ngIf="user && !isLoading">
       <button mat-flat-button color="primary" [routerLink]="['/home/users/edit', user.id]" *ngIf="isAdmin">
         <mat-icon>edit</mat-icon> Düzenle
       </button>
-      <button mat-flat-button color="warn" *ngIf="isAdmin">
+      <button mat-flat-button color="warn" (click)="confirmDeleteUser(user)" *ngIf="isAdmin">
         <mat-icon>delete</mat-icon> Sil
       </button>
       <button mat-button [routerLink]="['/home/users']">
         <mat-icon>arrow_back</mat-icon> Geri
       </button>
     </mat-card-actions>
-  </mat-card>
-
-  <mat-card *ngIf="!isLoading && !user" class="error-card">
-    <mat-card-content>
-      <p>Kullanıcı bulunamadı veya bir hata oluştu.</p>
-      <button mat-flat-button color="accent" [routerLink]="['/home/users']">
-        <mat-icon>list</mat-icon> Kullanıcı Listesi
-      </button>
-    </mat-card-content>
   </mat-card>
 </div>

@@ -11,8 +11,9 @@
  .username-display { /* Kullanıcı adı için yeni stil */
     font-weight: 500;
     color: #555; /* Biraz daha koyu gri */
-    margin: 0 16px; /* Butonlardan ve başlıktan boşluk */
+    margin: 0 auto; /* Butonlardan ve başlıktan boşluk */
     white-space: nowrap; /* Tek satırda kalmasını sağla */
     overflow: hidden; /* Taşmayı gizle */
-    text-overflow: ellipsis; 
+    text-overflow: ellipsis;
+    display: block;
  }

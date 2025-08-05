@@ -10,29 +10,23 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar'; // Mesaj göstermek için
 import { MatSelectModule } from '@angular/material/select'; // <<< MatSelectModule'ü import edin
-import { MatIcon } from '@angular/material/icon';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../services/auth.service'; // Auth Servisiniz
+import { UserRegistrationDto } from '../../dtos/auth.dtos';
 
 // Backend'deki RegisterModel'in TypeScript karşılığı
-export interface RegisterModel {
-  username: string;
-  email: string;
-  password: string;
-  role?: string; // <<< Role alanını ekleyin, backend'e göre opsiyonel olabilir
-}
-
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule, // <<< ReactiveFormsModule'ü imports'a ekleyin
+    ReactiveFormsModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule,
-    MatIcon 
+    // MatSelectModule kaldırıldı
+    MatIconModule // MatIcon için MatIconModule kullanın
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
@@ -40,8 +34,8 @@ export interface RegisterModel {
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
-  roles: string[] = ['User', 'Admin']; // Kullanıcıların seçebileceği roller
-hidePassword: any;
+  // roles: string[] = ['User', 'Admin']; // <<< Bu satır kaldırıldı, rol seçimi artık yok
+  hidePassword = true; // Şifre gösterme/gizleme butonu için
 
   constructor(
     private fb: FormBuilder,
@@ -49,11 +43,12 @@ hidePassword: any;
     private router: Router,
     private snackBar: MatSnackBar
   ) {
+    // Formu FormBuilder ile başlatıyoruz
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      role: ['User', Validators.required] // <<< 'role' form kontrolünü ekledik ve varsayılan 'User'
+      // role: ['User', Validators.required] // <<< 'role' form kontrolü kaldırıldı
     });
   }
 
@@ -63,7 +58,8 @@ hidePassword: any;
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      const registerData: RegisterModel = this.registerForm.value;
+      // registerData doğrudan UserRegistrationDto yapısına uyuyor
+      const registerData: UserRegistrationDto = this.registerForm.value; // <<< Tipi UserRegistrationDto olarak belirtildi
 
       this.authService.register(registerData).subscribe({
         next: (response) => {
@@ -72,10 +68,14 @@ hidePassword: any;
         },
         error: (err) => {
           console.error('Kayıt hatası:', err);
-          this.snackBar.open('Kayıt başarısız oldu: ' + (err.error?.message || 'Bilinmeyen Hata'), 'Kapat', { duration: 5000 });
+          // Hata mesajını daha doğru bir şekilde yakala
+          const errorMessage = err.message || 'Bilinmeyen bir hata oluştu.';
+          this.snackBar.open('Kayıt başarısız oldu: ' + errorMessage, 'Kapat', { duration: 5000 });
         }
       });
     } else {
+      // Form geçerli değilse, hataları göstermek için tüm alanları işaretle
+      this.registerForm.markAllAsTouched();
       this.snackBar.open('Lütfen tüm alanları doğru doldurun.', 'Kapat', { duration: 3000 });
     }
   }

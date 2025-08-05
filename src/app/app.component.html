@@ -2,15 +2,23 @@
   <mat-toolbar>
     <span class="app-title">IK Yönetim Sistemi</span>
     <span class="spacer"></span>
-    
-    <!-- Kullanıcı adı burada gösterilecek -->
-    <span *ngIf="isLoggedIn$ | async" class="username-display">
+
+    <!-- Kullanıcı adı ve aktif rolü göster -->
+    <span *ngIf="isLoggedIn$ | async" class="username-display" routerLink="/home/profile" style="cursor: pointer;">
       Hoş Geldin, {{ currentUsername$ | async }}!
+      <span *ngIf="authService.activeSelectedRole$ | async as role"> ({{role}})</span>
     </span>
 
     <span class="spacer"></span>
 
-    <a mat-button routerLink="/home" routerLinkActive="active-link">Ana Sayfa</a>
+    <!-- 'Admin' rolü olanlar için bağlantılar -->
+    <a mat-button routerLink="/home/users" routerLinkActive="active-link" *ngIf="authService.isAdmin$ | async">Kullanıcılar</a>
+    <a mat-button routerLink="/home/roles" routerLinkActive="active-link" *ngIf="authService.isAdmin$ | async">Rol Yönetimi</a>
+
+    <!-- 'Editor' rolü olanlar için örnek bağlantı -->
+    <a mat-button routerLink="/home/editor-dashboard" routerLinkActive="active-link"
+       *ngIf="(authService.activeSelectedRole$ | async) === 'Editor'">Editör Paneli</a>
+
     <a mat-button routerLink="/register" *ngIf="!(isLoggedIn$ | async)" routerLinkActive="active-link">Kayıt Ol</a>
     <a mat-button routerLink="/login" *ngIf="!(isLoggedIn$ | async)" routerLinkActive="active-link">Giriş Yap</a>
 
@@ -21,7 +29,6 @@
     <router-outlet></router-outlet>
   </main>
 
-  <!-- Footer'ı app.component.html'de tutmaya devam ediyorsanız -->
   <footer class="app-footer">
     <p>&copy; 2025 Kullanıcı Yönetimi Uygulaması</p>
   </footer>

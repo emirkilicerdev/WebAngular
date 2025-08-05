@@ -7,49 +7,51 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { RouterLink } from '@angular/router'; // routerLink direktifi için
-import { MatButtonModule } from '@angular/material/button'; // Butonlar için
-import { UserDetail } from '../../dtos/user.dtos'; // Kullanıcı detay DTO'su
+import { RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { UserDetailDto } from '../../dtos/user.dtos'; // UserDetailDto'yu user.dtos'tan alıyoruz
 import { AuthService } from '../../services/auth.service';
-import { map } from 'rxjs/operators'; // <<< Bu satır eklendi veya güncellendi!
+import { map } from 'rxjs/operators';
 
 // Dialog modülü ve servisi
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog'; // Oluşturacağımız onay dialogu
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog'; // Doğru yol ve dosya adı
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink, // routerLink kullanmak için import edin
+    RouterLink,
     MatCardModule,
     MatListModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatButtonModule // Butonlar için import edin
+    MatButtonModule,
   ],
   templateUrl: './user-list.html',
   styleUrls: ['./user-list.scss']
 })
 export class UserListComponent implements OnInit {
-  users: UserDetail[] = [];
+  users: UserDetailDto[] = [];
   isLoading = true;
   errorMessage: string | null = null;
-  isAdmin = false; // Kullanıcının admin olup olmadığını kontrol etmek için
-  
+  isAdmin = false;
+  currentUserRole$: Observable<string | null>;
 
   constructor(
     private userService: UserService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private authService: AuthService 
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {
     this.getAllUsers();
-    this.authService.currentUserRole$.pipe(
-      map(role => role === 'Admin')
+    // Kullanıcının admin olup olmadığını kontrol et
+    this.authService.currentUserRoles$.pipe( // currentUserRoles$ kullanıldı
+      map(roles => roles.includes('Admin')) // Roller dizisinde 'Admin' var mı kontrol et
     ).subscribe(isAdmin => {
       this.isAdmin = isAdmin;
     });
@@ -59,13 +61,11 @@ export class UserListComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = null;
     this.userService.getAllUsers().subscribe({
-      next: (data) => {
+      next: (data: UserDetailDto[]) => {
         this.users = data;
         this.isLoading = false;
-        console.log('Kullanıcılar yüklendi:', this.users);
       },
       error: (err) => {
-        console.error('Kullanıcıları çekerken hata oluştu:', err);
         this.isLoading = false;
         const displayMessage = err.message || 'Kullanıcılar yüklenirken bir hata oluştu.';
         this.errorMessage = displayMessage;
@@ -73,8 +73,7 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  // Yeni: Kullanıcı silme metodu
-  confirmDeleteUser(user: UserDetail): void {
+  confirmDeleteUser(user: UserDetailDto): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '300px',
       data: {
@@ -94,10 +93,9 @@ export class UserListComponent implements OnInit {
     this.userService.deleteUser(id).subscribe({
       next: () => {
         this.snackBar.open('Kullanıcı başarıyla silindi.', 'Kapat', { duration: 3000 });
-        this.getAllUsers(); // Listeyi yeniden yükle
+        this.getAllUsers();
       },
       error: (err) => {
-        console.error('Kullanıcı silinirken hata oluştu:', err);
         this.snackBar.open(err.message || 'Kullanıcı silinirken hata oluştu.', 'Kapat', { duration: 5000, panelClass: ['error-snackbar'] });
       }
     });

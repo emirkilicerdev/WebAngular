@@ -1,0 +1,174 @@
+/* src/app/components/profile/profile.component.scss */
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Kartı yukarı hizala, dikeyde ortalama */
+  padding: 24px;
+  box-sizing: border-box;
+  min-height: calc(100vh - 56px - 40px); /* Toolbar ve footer yüksekliğini düşerek kalan alanı kapla */
+  /* Bu min-height, app.component.scss'deki toolbar ve footer yüksekliklerine göre ayarlanmalı */
+}
+
+.profile-card {
+  max-width: 600px; /* user-form-card ile aynı max-width */
+  width: 100%;
+  border-radius: 12px; /* Yuvarlak köşeler */
+  background-color: white;
+  padding: 32px; /* İç boşluğu artır */
+  box-sizing: border-box;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12); /* mat-elevation-z4 değeri */
+
+  mat-card-header {
+    margin-bottom: 24px;
+    justify-content: center; /* Başlığı ortala */
+    display: block; /* İçeriği ortalamak için */
+  }
+
+  mat-card-title {
+    font-size: 2.2em; /* user-form-card ile aynı font-size */
+    font-weight: 500;
+    color: var(--color-primary); /* user-form-card ile aynı renk */
+    text-align: center; /* Başlığı ortala */
+  }
+
+  mat-card-content {
+    .profile-details {
+      p {
+        display: flex;
+        align-items: center;
+        font-size: 1.1em;
+        margin-bottom: 12px; /* Satırlar arası boşluk */
+        color: var(--color-text-primary); /* Metin rengi */
+
+        mat-icon {
+          margin-right: 10px;
+          color: var(--color-primary); /* İkon rengi */
+          font-size: 24px; /* İkon boyutu */
+          width: 24px;
+          height: 24px;
+        }
+
+        strong {
+          min-width: 150px; /* Label'lar için sabit genişlik */
+          display: inline-block;
+          color: var(--color-text-secondary); /* Label rengi */
+        }
+      }
+    }
+  }
+
+  .spinner-container, .error-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px; /* Yükleme/Hata alanı için minimum yükseklik */
+    text-align: center;
+
+    p {
+      margin-top: 16px;
+      font-size: 1.1em;
+      color: var(--color-text-secondary);
+    }
+
+    mat-icon {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      margin-top: 15px;
+      border-radius: 8px;
+      padding: 0 16px;
+      height: 40px;
+      font-size: 0.95em;
+      font-weight: 500;
+    }
+  }
+
+  .error-message {
+    background-color: #FFCDD2; /* Hata arka planı */
+    color: var(--color-warn); /* Hata metin rengi */
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-end; /* Butonları sağa hizala */
+    gap: 12px; /* Butonlar arası boşluk */
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-grey-200); /* user-form-card ile aynı */
+
+    button {
+      border-radius: 8px; /* Yuvarlak buton köşeleri */
+      padding: 0 16px;
+      height: 40px;
+      font-size: 0.95em;
+      font-weight: 500;
+      display: inline-flex; /* İkon ve metni hizala */
+      align-items: center;
+      gap: 8px; /* İkon ve metin arası boşluk */
+
+      &.mat-flat-button.mat-primary {
+        background-color: var(--color-primary);
+        color: var(--color-text-light-primary);
+        &:hover {
+          background-color: var(--color-primary-dark);
+        }
+      }
+
+      &.mat-button { /* Geri butonu için */
+        color: var(--color-text-secondary);
+        &:hover {
+          background-color: var(--color-grey-100);
+        }
+      }
+
+      mat-icon {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+/* Responsive düzenlemeler */
+@media (max-width: 600px) {
+  .profile-container {
+    padding: 16px;
+  }
+
+  .profile-card {
+    padding: 20px;
+    border-radius: 8px;
+    
+    mat-card-title {
+      font-size: 1.8em;
+    }
+
+    mat-card-content {
+      .profile-details {
+        p {
+          font-size: 1em;
+          flex-direction: column; /* Küçük ekranlarda alt alta sırala */
+          align-items: flex-start;
+
+          strong {
+            min-width: unset; /* Sabit genişliği kaldır */
+            margin-bottom: 5px; /* Label altında boşluk */
+          }
+        }
+      }
+    }
+
+    mat-card-actions {
+      flex-direction: column; /* Butonları alt alta sırala */
+      gap: 10px;
+      button {
+        width: 100%; /* Tam genişlikte yap */
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+<!-- src/app/components/profile-edit/profile-edit.component.html -->
+<div class="profile-edit-container">
+  <mat-card class="profile-edit-card">
+    <mat-card-header>
+      <mat-card-title>Profili Düzenle</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- Yükleme spinner'ı -->
+      <div *ngIf="isLoading" class="spinner-container">
+        <mat-spinner></mat-spinner>
+        <p>Profil bilgileri yükleniyor...</p>
+      </div>
+
+      <!-- Hata mesajı -->
+      <div *ngIf="errorMessage && !isLoading" class="error-message">
+        <mat-icon color="warn">error</mat-icon>
+        <p>{{ errorMessage }}</p>
+        <button mat-flat-button color="primary" (click)="loadUserProfile()">
+          <mat-icon>refresh</mat-icon> Tekrar Dene
+        </button>
+      </div>
+
+      <!-- Profil düzenleme formu -->
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading && !errorMessage">
+        <!-- Kullanıcı Adı Alanı -->
+        <mat-form-field appearance="outline">
+          <mat-label>Kullanıcı Adı</mat-label>
+          <input matInput formControlName="username" required>
+          <mat-error *ngIf="profileForm.get('username')?.invalid && profileForm.get('username')?.touched">
+            Kullanıcı adı gerekli.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- E-posta Alanı -->
+        <mat-form-field appearance="outline">
+          <mat-label>E-posta</mat-label>
+          <input matInput formControlName="email" type="email" required>
+          <mat-error *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+            Geçerli bir e-posta adresi girin.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Yeni Şifre Alanı (Opsiyonel) -->
+        <mat-form-field appearance="outline">
+          <mat-label>Yeni Şifre (Değiştirmek istemiyorsanız boş bırakın)</mat-label>
+          <input matInput formControlName="password" type="password">
+          <!-- Şifre için özel validasyon mesajları eklenebilir -->
+        </mat-form-field>
+
+        <!-- Form Aksiyon Butonları -->
+        <div class="form-actions">
+          <button mat-flat-button color="primary" type="submit" [disabled]="profileForm.invalid">
+            <mat-icon>save</mat-icon> Kaydet
+          </button>
+          <button mat-button type="button" [routerLink]="['/home/profile']">
+            <mat-icon>cancel</mat-icon> İptal
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

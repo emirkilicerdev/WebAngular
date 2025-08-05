@@ -1,0 +1,89 @@
+/* src/app/components/confirm-dialog/confirm-dialog.scss */
+
+// Mat-dialog-container'ın varsayılan stillerini geçersiz kılmak için
+// Bu stiller genellikle global olarak veya dialog açılırken uygulanır.
+// Ancak, bileşenin kendi özel stilini sağlamak için buraya eklenmiştir.
+
+.mat-mdc-dialog-container {
+  border-radius: 12px !important; // Yuvarlak köşeler
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15) !important; // Hafif gölge
+  background-color: #ffffff !important; // Beyaz arka plan
+}
+
+h2.mat-mdc-dialog-title {
+  font-size: 1.5em;
+  font-weight: 500;
+  color: var(--color-primary); // Ana renk
+  padding: 20px 24px 10px; // Üst, yan ve alt boşluk
+  border-bottom: 1px solid var(--color-grey-100); // Alt çizgi
+  margin-bottom: 0; // Varsayılan margin'i sıfırla
+}
+
+mat-dialog-content {
+  padding: 20px 24px; // İçerik için boşluk
+  font-size: 1.1em;
+  color: var(--color-text-primary); // Ana metin rengi
+  line-height: 1.6;
+
+  p {
+    margin: 0; // Paragrafın varsayılan margin'ini sıfırla
+  }
+}
+
+mat-dialog-actions {
+  padding: 10px 24px 20px; // Butonlar için boşluk
+  display: flex;
+  justify-content: flex-end; // Butonları sağa hizala
+  gap: 10px; // Butonlar arası boşluk
+
+  button {
+    border-radius: 8px; // Yuvarlak buton köşeleri
+    padding: 0 16px;
+    height: 40px;
+    font-size: 0.95em;
+    font-weight: 500;
+    min-width: unset; // Butonların minimum genişliğini kaldır
+
+    &.mat-button { // İptal butonu
+      color: var(--color-text-secondary);
+      &:hover {
+        background-color: var(--color-grey-100); // Hover'da hafif gri
+      }
+    }
+
+    &.mat-flat-button.mat-warn { // Onayla butonu (kırmızı)
+      background-color: var(--color-warn); // Uyarı rengi
+      color: var(--color-text-light-primary); // Beyaz metin
+      &:hover {
+        background-color: #D32F2F; // Kırmızı rengin daha koyu tonu (Material Red 700)
+      }
+    }
+  }
+}
+
+// Responsive düzenlemeler
+@media (max-width: 600px) {
+  .mat-mdc-dialog-container {
+    border-radius: 8px !important;
+  }
+
+  h2.mat-mdc-dialog-title {
+    font-size: 1.3em;
+    padding: 15px 20px 8px;
+  }
+
+  mat-dialog-content {
+    padding: 15px 20px;
+    font-size: 1em;
+  }
+
+  mat-dialog-actions {
+    padding: 8px 20px 15px;
+    flex-direction: column; // Butonları küçük ekranlarda alt alta sırala
+    gap: 8px;
+
+    button {
+      width: 100%; // Tam genişlikte yap
+    }
+  }
+}

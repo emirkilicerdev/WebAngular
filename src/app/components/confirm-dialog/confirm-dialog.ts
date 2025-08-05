@@ -3,38 +3,38 @@ import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog'; // MatDialogModule'ü de import edin
-
-export interface ConfirmDialogData {
-  title: string;
-  message: string;
-}
+import { MatDialogModule } from '@angular/material/dialog'; // MatDialogModule import edildi
 
 @Component({
   selector: 'app-confirm-dialog',
   standalone: true,
   imports: [
     CommonModule,
-    MatDialogModule, // MatDialogModule'ü burada kullanabilmek için
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule // MatDialogModule import edildi
   ],
-  template: `
-    <h2 mat-dialog-title>{{ data.title }}</h2>
-    <mat-dialog-content>{{ data.message }}</mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-button (click)="onNoClick()">İptal</button>
-      <button mat-flat-button color="warn" [mat-dialog-close]="true" cdkFocusInitial>Evet</button>
-    </mat-dialog-actions>
-  `,
-  styles: []
+  templateUrl: './confirm-dialog.html',
+  styleUrls: ['./confirm-dialog.scss']
 })
 export class ConfirmDialogComponent {
   constructor(
+    // MatDialogRef: Dialogu kapatmak için kullanılır.
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData
+    // MAT_DIALOG_DATA: Dialoga dışarıdan veri aktarmak için kullanılır (örn. başlık, mesaj).
+    @Inject(MAT_DIALOG_DATA) public data: { title: string; message: string }
   ) {}
 
-  onNoClick(): void {
-    this.dialogRef.close(false); // False döndürerek işlemi iptal et
+  /**
+   * Onayla butonuna tıklandığında dialogu kapatır ve 'true' değeri döndürür.
+   */
+  onConfirm(): void {
+    this.dialogRef.close(true); // Onaylandı
+  }
+
+  /**
+   * İptal butonuna tıklandığında dialogu kapatır ve 'false' değeri döndürür.
+   */
+  onCancel(): void {
+    this.dialogRef.close(false); // İptal edildi
   }
 }

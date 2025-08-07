@@ -55,7 +55,7 @@ export class UserDetailComponent implements OnInit {
         this.userId = +id;
         this.getUserDetails(this.userId);
       } else {
-        this.snackBar.open('Kullanıcı ID\'si bulunamadı.', 'Kapat', { duration: 3000 });
+        this.snackBar.open('Kullanıcı ID\'si bulunamadı.', 'Kapat', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
         this.isLoading = false;
       }
     });
@@ -70,7 +70,7 @@ export class UserDetailComponent implements OnInit {
       },
       error: (err) => {
         console.error('Kullanıcı detayları çekilirken hata oluştu:', err);
-        this.snackBar.open(err.message || 'Kullanıcı detayları yüklenirken hata oluştu.', 'Kapat', { duration: 5000 });
+        this.snackBar.open(err.message || 'Kullanıcı detayları yüklenirken hata oluştu.', 'Kapat', { duration: 5000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
         this.isLoading = false;
         this.user = null;
       }
@@ -96,12 +96,12 @@ export class UserDetailComponent implements OnInit {
   deleteUser(id: number): void {
     this.userService.deleteUser(id).subscribe({
       next: () => {
-        this.snackBar.open('Kullanıcı başarıyla silindi.', 'Kapat', { duration: 3000 });
+        this.snackBar.open('Kullanıcı başarıyla silindi.', 'Kapat', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['success-snackbar'] });
         this.router.navigate(['/home/users']); // Kullanıcı silindikten sonra kullanıcı listesine yönlendir
       },
       error: (err) => {
         console.error('Kullanıcı silinirken hata oluştu:', err);
-        this.snackBar.open(err.message || 'Kullanıcı silinirken hata oluştu.', 'Kapat', { duration: 5000, panelClass: ['error-snackbar'] });
+        this.snackBar.open(err.message || 'Kullanıcı silinirken hata oluştu.', 'Kapat', { duration: 5000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
       }
     });
   }

@@ -115,14 +115,14 @@ export class ProfileEditComponent implements OnInit {
         }),
         catchError(err => {
           // API'den gelen hatayı yakala ve kullanıcıya göster
-          this.snackBar.open(err.message || 'Profil güncellenirken hata oluştu.', 'Kapat', { duration: 5000 });
+          this.snackBar.open(err.message || 'Profil güncellenirken hata oluştu.', 'Kapat', { duration: 5000,verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
           console.error('Profil güncellenirken hata oluştu:', err);
           return throwError(() => err); // Hatayı yeniden fırlat
         })
       ).subscribe({
         next: () => {
           // Başarılı olursa kullanıcıya bildirim göster ve profil sayfasına yönlendir
-          this.snackBar.open('Profil başarıyla güncellendi.', 'Kapat', { duration: 3000 });
+          this.snackBar.open('Profil başarıyla güncellendi.', 'Kapat', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['success-snackbar'] });
           this.router.navigate(['/home/profile']); // Profil sayfasına geri dön
         },
         error: () => {
@@ -132,7 +132,7 @@ export class ProfileEditComponent implements OnInit {
     } else {
       // Form geçerli değilse tüm alanları dokunulmuş olarak işaretle ve hata mesajı göster
       this.profileForm.markAllAsTouched();
-      this.snackBar.open('Lütfen tüm alanları doğru doldurun.', 'Kapat', { duration: 3000 });
+      this.snackBar.open('Lütfen tüm alanları doğru doldurun.', 'Kapat', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
     }
   }
 }

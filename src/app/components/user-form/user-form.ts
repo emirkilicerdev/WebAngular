@@ -119,7 +119,7 @@ export class UserFormComponent implements OnInit {
       },
       error: (err) => {
         console.error('Roller yüklenirken hata oluştu:', err);
-        this.snackBar.open(err.message || 'Roller yüklenirken hata oluştu.', 'Kapat', { duration: 5000 });
+        this.snackBar.open(err.message || 'Roller yüklenirken hata oluştu.', 'Kapat', { duration: 5000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
       }
     });
   }
@@ -143,7 +143,7 @@ export class UserFormComponent implements OnInit {
       },
       error: (err) => {
         console.error('Kullanıcı bilgileri yüklenirken hata oluştu:', err);
-        this.snackBar.open(err.message || 'Kullanıcı bilgileri yüklenirken hata oluştu.', 'Kapat', { duration: 5000 });
+        this.snackBar.open(err.message || 'Kullanıcı bilgileri yüklenirken hata oluştu.', 'Kapat', { duration: 5000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
         this.router.navigate(['/home/users']);
       }
     });
@@ -177,13 +177,13 @@ export class UserFormComponent implements OnInit {
 
       this.userService.updateUser(this.userId, userUpdate).subscribe({
         next: () => {
-          this.snackBar.open('Kullanıcı başarıyla güncellendi.', 'Kapat', { duration: 3000 });
+          this.snackBar.open('Kullanıcı başarıyla güncellendi.', 'Kapat', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['success-snackbar'] });
           this.authService.notifyRolesChanged();
           this.router.navigate(['/home/users']);
         },
         error: (err) => {
           console.error('Kullanıcı güncellenirken hata oluştu:', err);
-          this.snackBar.open(err.message || 'Kullanıcı güncellenirken hata oluştu.', 'Kapat', { duration: 5000 });
+          this.snackBar.open(err.message || 'Kullanıcı güncellenirken hata oluştu.', 'Kapat', { duration: 5000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
         }
       });
     } else {
@@ -195,12 +195,12 @@ export class UserFormComponent implements OnInit {
       };
       this.userService.createUser(userCreate).subscribe({
         next: () => {
-          this.snackBar.open('Kullanıcı başarıyla oluşturuldu.', 'Kapat', { duration: 3000 });
+          this.snackBar.open('Kullanıcı başarıyla oluşturuldu.', 'Kapat', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['success-snackbar'] });
           this.router.navigate(['/home/users']);
         },
         error: (err) => {
           console.error('Kullanıcı oluşturulurken hata oluştu:', err);
-          this.snackBar.open(err.message || 'Kullanıcı oluşturulurken hata oluştu.', 'Kapat', { duration: 5000 });
+          this.snackBar.open(err.message || 'Kullanıcı oluşturulurken hata oluştu.', 'Kapat', { duration: 5000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
         }
       });
     }

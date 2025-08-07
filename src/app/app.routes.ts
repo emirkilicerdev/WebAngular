@@ -15,8 +15,8 @@ import { RoleManagementComponent } from './components/role-management/role-manag
 import { NoAuthGuard } from './guards/no-auth-guard';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] }, // AuthGuard ile korunan login rotası
-  { path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard] }, // AuthGuard ile korunan register rotası
+  { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard] },
   {
     path: 'home',
     component: HomeComponent,

@@ -63,20 +63,20 @@ export class RegisterComponent implements OnInit {
 
       this.authService.register(registerData).subscribe({
         next: (response) => {
-          this.snackBar.open('Kayıt başarılı! Giriş yapabilirsiniz.', 'Kapat', { duration: 3000 });
+          this.snackBar.open('Kayıt başarılı! Giriş yapabilirsiniz.', 'Kapat', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['success-snackbar'] });
           this.router.navigate(['/login']); // Kayıt sonrası giriş sayfasına yönlendir
         },
         error: (err) => {
           console.error('Kayıt hatası:', err);
           // Hata mesajını daha doğru bir şekilde yakala
           const errorMessage = err.message || 'Bilinmeyen bir hata oluştu.';
-          this.snackBar.open('Kayıt başarısız oldu: ' + errorMessage, 'Kapat', { duration: 5000 });
+          this.snackBar.open('Kayıt başarısız oldu: ' + errorMessage, 'Kapat', { duration: 5000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
         }
       });
     } else {
       // Form geçerli değilse, hataları göstermek için tüm alanları işaretle
       this.registerForm.markAllAsTouched();
-      this.snackBar.open('Lütfen tüm alanları doğru doldurun.', 'Kapat', { duration: 3000 });
+      this.snackBar.open('Lütfen tüm alanları doğru doldurun.', 'Kapat', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
     }
   }
 }

@@ -71,7 +71,9 @@ export class LoginComponent implements OnInit {
           // Başarılı giriş mesajını kullanıcıya göster
           this.snackBar.open(response.message || 'Giriş başarıyla tamamlandı!', 'Kapat', {
             duration: 3000,
-            panelClass: ['success-snackbar']
+            panelClass: ['success-snackbar'],
+            horizontalPosition: 'end',   // sağa hizala
+            verticalPosition: 'top'      // yukarı hizala
           });
           this.loginForm.reset(); // Formu temizle
           // Yönlendirme mantığı AuthService içinde yönetildiği için buradan kaldırıldı.
@@ -83,7 +85,9 @@ export class LoginComponent implements OnInit {
           const errorMessage = err.error?.message || 'Giriş yapılırken bir hata oluştu.';
           this.snackBar.open(errorMessage, 'Kapat', {
             duration: 5000,
-            panelClass: ['error-snackbar']
+            panelClass: ['error-snackbar'],
+            horizontalPosition: 'end',   // sağa hizala
+            verticalPosition: 'top'      // yukarı hizala
           });
         }
       });

@@ -92,11 +92,11 @@ export class UserListComponent implements OnInit {
   deleteUser(id: number): void {
     this.userService.deleteUser(id).subscribe({
       next: () => {
-        this.snackBar.open('Kullanıcı başarıyla silindi.', 'Kapat', { duration: 3000 });
+        this.snackBar.open('Kullanıcı başarıyla silindi.', 'Kapat', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['success-snackbar'] });
         this.getAllUsers();
       },
       error: (err) => {
-        this.snackBar.open(err.message || 'Kullanıcı silinirken hata oluştu.', 'Kapat', { duration: 5000, panelClass: ['error-snackbar'] });
+        this.snackBar.open(err.message || 'Kullanıcı silinirken hata oluştu.', 'Kapat', { duration: 5000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
       }
     });
   }

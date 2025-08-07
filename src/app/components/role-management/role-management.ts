@@ -88,7 +88,7 @@ export class RoleManagementComponent implements OnInit {
    */
   onSubmit(): void {
     if (this.roleForm.invalid) {
-      this.snackBar.open('Lütfen rol adını girin.', 'Kapat', { duration: 3000 });
+      this.snackBar.open('Lütfen rol adını girin.', 'Kapat', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
       return;
     }
 
@@ -102,13 +102,13 @@ export class RoleManagementComponent implements OnInit {
       };
       this.roleService.updateRole(this.editingRoleId, roleUpdate).subscribe({
         next: () => {
-          this.snackBar.open('Rol başarıyla güncellendi.', 'Kapat', { duration: 3000 });
+          this.snackBar.open('Rol başarıyla güncellendi.', 'Kapat', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['success-snackbar'] });
           this.resetForm(); // Formu sıfırla
           this.loadRoles(); // Rolleri yeniden yükle
           this.authService.notifyRolesChanged();;
         },
         error: (err) => {
-          this.snackBar.open(err.message || 'Rol güncellenirken hata oluştu.', 'Kapat', { duration: 5000 });
+          this.snackBar.open(err.message || 'Rol güncellenirken hata oluştu.', 'Kapat', { duration: 5000,verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
           console.error('Rol güncelleme hatası:', err);
         }
       });
@@ -119,13 +119,13 @@ export class RoleManagementComponent implements OnInit {
       };
       this.roleService.createRole(roleCreate).subscribe({
         next: () => {
-          this.snackBar.open('Rol başarıyla oluşturuldu.', 'Kapat', { duration: 3000 });
+          this.snackBar.open('Rol başarıyla oluşturuldu.', 'Kapat', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['success-snackbar'] });
           this.resetForm(); // Formu sıfırla
           this.loadRoles(); // Rolleri yeniden yükle
           this.authService.notifyRolesChanged();
         },
         error: (err) => {
-          this.snackBar.open(err.message || 'Rol oluşturulurken hata oluştu.', 'Kapat', { duration: 5000 });
+          this.snackBar.open(err.message || 'Rol oluşturulurken hata oluştu.', 'Kapat', { duration: 5000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
           console.error('Rol oluşturma hatası:', err);
         }
       });
@@ -169,12 +169,12 @@ export class RoleManagementComponent implements OnInit {
   deleteRole(id: number): void {
     this.roleService.deleteRole(id).subscribe({
       next: () => {
-        this.snackBar.open('Rol başarıyla silindi.', 'Kapat', { duration: 3000 });
+        this.snackBar.open('Rol başarıyla silindi.', 'Kapat', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['success-snackbar'] });
         this.loadRoles();
         this.authService.notifyRolesChanged();
       },
       error: (err) => {
-        this.snackBar.open(err.message || 'Rol silinirken hata oluştu.', 'Kapat', { duration: 5000, panelClass: ['error-snackbar'] });
+        this.snackBar.open(err.message || 'Rol silinirken hata oluştu.', 'Kapat', { duration: 5000, verticalPosition: 'top', horizontalPosition: 'end', panelClass: ['error-snackbar'] });
         console.error('Rol silme hatası:', err);
       }
     });

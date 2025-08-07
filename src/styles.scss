@@ -7,13 +7,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 // Angular Material Snack Bar için özel stiller
 .success-snackbar {
-  background-color: #4CAF50 !important; /* Yeşil */
+  background-color: #4caf50 !important; // yeşil
   color: white !important;
-  border-radius: 4px;
+  font-weight: 500;
 }
 
 .error-snackbar {
-  background-color: #f44336 !important; /* Kırmızı */
+  background-color: #f44336 !important; // kırmızı
   color: white !important;
-  border-radius: 4px;
+  font-weight: 500;
 }
+

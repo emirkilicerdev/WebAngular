@@ -62,3 +62,15 @@ mat-card-title {
     font-size: 1.8em;
   }
 }
+
+.success-snackbar {
+  background-color: #4caf50; // yeşil
+  color: white;
+  font-weight: 500;
+}
+
+.error-snackbar {
+  background-color: #f44336; // kırmızı
+  color: white;
+  font-weight: 500;
+}

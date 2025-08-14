@@ -1,0 +1,22 @@
+<mat-card-content *ngIf="leaveDetail">
+  <!-- Diğer bilgiler -->
+
+  <p><strong>İzin Türü:</strong> {{ leaveDetail.leaveTypeName }}</p>
+  <p><strong>Durum:</strong> {{ leaveDetail.leaveStatusName }}</p>
+  <p><strong>Kullanıcı:</strong> {{ leaveDetail.userName }}</p>
+  <p><strong>Başlangıç:</strong> {{ leaveDetail.startDate | date }}</p>
+  <p><strong>Bitiş:</strong> {{ leaveDetail.endDate | date }}</p>
+  <p><strong>Açıklama:</strong> {{ leaveDetail.reason }}</p>
+  <p><strong>Onaylayan:</strong> {{ leaveDetail.approvedByName }}</p>
+  <p><strong>Oluşturulma Tarihi:</strong> {{ leaveDetail.createdAt | date:'short' }}</p>
+
+  <!-- Sadece Admin veya Leader ise butonlar görünsün -->
+  <div *ngIf="leaveDetail 
+            && (currentRole === 'Admin' || currentRole === 'Leader') 
+            && leaveDetail.leaveStatusId === 1
+            && leaveDetail.userId !== currentUserId">
+  <button mat-raised-button color="primary" (click)="approveLeave()">Onayla</button>
+  <button mat-raised-button color="warn" (click)="rejectLeave()">Reddet</button>
+</div>
+
+</mat-card-content>

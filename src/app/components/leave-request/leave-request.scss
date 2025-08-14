@@ -1,0 +1,112 @@
+/* Ana kapsayıcı */
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  font-family: 'Inter', sans-serif;
+  padding: 1rem;
+}
+
+/* Kart tasarımı */
+mat-card {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 20px;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12); /* mat-elevation-z4 değeri */
+  overflow: hidden;
+  background-color: white;
+}
+
+/* Başlık bölümü */
+mat-card-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+
+  mat-card-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #3f51b5;
+    text-align: center;
+  }
+}
+
+/* İçerik alanı */
+mat-card-content {
+  padding: 2rem;
+}
+
+/* Form alanları */
+mat-form-field {
+  width: 100%;
+
+  ::ng-deep .mat-form-field-outline {
+    border-radius: 10px;
+  }
+
+  ::ng-deep .mat-form-field-outline-thick {
+    border-color: #3b82f6 !important; // mavi vurgu
+  }
+
+  ::ng-deep .mat-form-field-label {
+    font-weight: 500;
+  }
+}
+
+/* Tarih alanları grid uyumu */
+.date-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Açıklama alanı */
+textarea {
+  resize: vertical;
+}
+
+/* Gönder butonu */
+.custom-submit-button {
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  text-transform: none;
+
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    background-color: #2563eb; // hover mavisi
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  }
+
+  &:disabled {
+    background-color: #cbd5e1;
+    cursor: not-allowed;
+  }
+}
+
+/* Geri bildirim mesajları */
+.success-message, .error-message {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.success-message {
+  color: #166534;
+  background-color: #dcfce7;
+  border: 1px solid #bbf7d0;
+}
+
+.error-message {
+  color: #b91c1c;
+  background-color: #fee2e2;
+  border: 1px solid #fecaca;
+}

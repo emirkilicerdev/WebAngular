@@ -1,0 +1,78 @@
+<!-- Ana kapsayıcı, ekranı ortalamak için -->
+<div class="flex items-center justify-center min-h-screen font-inter">
+  <!-- Kart bileşeni, daha temiz bir tasarım için -->
+  <mat-card class="w-full max-w-2xl rounded-2xl shadow-xl overflow-hidden bg-white">
+
+    <!-- Başlık bölümü -->
+    <mat-card-header class="p-6 border-b border-gray-200">
+      <mat-card-title class="text-3xl font-bold text-gray-800 text-center">
+        İzin Talep Formu
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="p-8">
+      <!-- Formun kendisi -->
+      <form [formGroup]="leaveForm" (ngSubmit)="submitRequest()" class="flex flex-col gap-6">
+
+        <!-- İzin Türü seçimi -->
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>İzin Türü</mat-label>
+          <mat-select formControlName="leaveTypeId" required>
+            <mat-option *ngFor="let type of leaveTypes" [value]="type.id">
+              {{ type.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="leaveForm.get('leaveTypeId')?.hasError('required')">
+            Lütfen bir izin türü seçin.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Başlangıç ve Bitiş Tarihleri aynı satırda -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Başlangıç Tarihi seçimi -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Başlangıç Tarihi</mat-label>
+            <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" required>
+            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #startDatePicker></mat-datepicker>
+            <mat-error *ngIf="leaveForm.get('startDate')?.hasError('required')">
+              Lütfen başlangıç tarihi girin.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Bitiş Tarihi seçimi -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Bitiş Tarihi</mat-label>
+            <input matInput [matDatepicker]="endDatePicker" formControlName="endDate" required>
+            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker></mat-datepicker>
+            <mat-error *ngIf="leaveForm.get('endDate')?.hasError('required')">
+              Lütfen bitiş tarihi girin.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Açıklama alanı -->
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Açıklama</mat-label>
+          <textarea matInput formControlName="reason" placeholder="İzin nedeninizi kısaca açıklayın." required rows="3"></textarea>
+          <mat-error *ngIf="leaveForm.get('reason')?.hasError('required')">
+            Lütfen bir açıklama girin.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Gönder butonu -->
+        <button mat-raised-button color="primary" type="submit" [disabled]="leaveForm.invalid" class="w-full py-3 custom-submit-button">
+          Gönder
+        </button>
+
+      </form>
+
+      <!-- Geri bildirim mesajları -->
+     
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Tailwind CSS için gerekli olan script -->
+<script src="https://cdn.tailwindcss.com"></script>

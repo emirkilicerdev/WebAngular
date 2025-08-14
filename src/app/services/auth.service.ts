@@ -43,6 +43,36 @@ export class AuthService {
     this.rolesChangedSource.next();
   }
 
+  public getUserIdFromToken(): number | null {
+    const token = this.getToken();
+
+    if (!token) {
+      // Return null if no token is found in localStorage.
+      console.warn('JWT token not found in localStorage.');
+      return null;
+    }
+
+    try {
+      // Decode the token using jwt-decode.
+      const decodedToken: any = this.decodeToken(token);
+
+      // Check if the 'nameid' claim exists in the decoded token.
+      if (decodedToken && decodedToken.nameid) {
+        // Convert the 'nameid' claim (which is a string) to a number and return it.
+        // The '+' operator is a shorthand for `Number()`.
+        return +decodedToken.nameid;
+      } else {
+        // Handle cases where the 'nameid' claim is missing.
+        console.warn('JWT token does not contain a "nameid" claim.');
+        return null;
+      }
+    } catch (error) {
+      // Log an error if the token is malformed or decoding fails.
+      console.error('Failed to decode JWT token.', error);
+      return null;
+    }
+  }
+
   getRolesFromDatabase(): Observable<string[]> {
     return this.http.get<string[]>(`${this.baseUrl}/roles`).pipe(
       catchError(this.handleError)
@@ -205,12 +235,7 @@ export class AuthService {
   }
 
   private setActiveRoleIfSingle(roles: string[]): void {
-    if (roles.length === 1) {
-      localStorage.setItem('active_role', roles[0]);
-      this._activeSelectedRole.next(roles[0]);
-      // Tek bir rol varsa, doğrudan ana sayfaya yönlendir
-      this.router.navigate(['/home/users']);
-    } else if (roles.length > 1) {
+    if (roles.length >= 1) {
       // Eğer birden fazla rol varsa, aktif rolü sıfırlayıp rol seçim ekranına yönlendir
       localStorage.removeItem('active_role'); // Aktif rolü temizle
       this._activeSelectedRole.next(null); // BehaviorSubject'i sıfırla
@@ -311,6 +336,7 @@ export class AuthService {
     this._activeSelectedRole.next(null); // Aktif rolü sıfırla
     this._availableRolesForSelection.next([]); // Seçilebilir rolleri sıfırla
     this._currentUsername.next(null); // Kullanıcı adını sıfırla
+    this.isAdmin$.next(false); // Admin durumunu sıfırla
     this.router.navigate(['/login']); // Giriş sayfasına yönlendir
   }
 

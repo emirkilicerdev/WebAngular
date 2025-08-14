@@ -1,19 +1,63 @@
-.spacer {
-  flex: 1 auto; // Toolbar'da elementleri birbirinden ayırmak için
+/* Genel yükseklik ayarları */
+html, body {
+  height: 100%;
+  margin: 0;
 }
 
-.app-title {
-    font-size: 1.2em; /* Biraz daha küçük başlık */
-    font-weight: 500;
-    color: #007bff; /* Mavi renk (Bootstrap primary mavisi gibi) */
-  } 
+/* Uygulama container */
+:host,
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
 
- .username-display { /* Kullanıcı adı için yeni stil */
-    font-weight: 500;
-    color: #555; /* Biraz daha koyu gri */
-    margin: 0 auto; /* Butonlardan ve başlıktan boşluk */
-    white-space: nowrap; /* Tek satırda kalmasını sağla */
-    overflow: hidden; /* Taşmayı gizle */
-    text-overflow: ellipsis;
-    display: block;
- }
+/* Toolbar ayarları */
+mat-toolbar {
+  flex: 0 0 auto; /* Sabit yükseklik */
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+/* Başlık */
+.app-title {
+  font-size: 1.2em;
+  font-weight: 500;
+  color: #3f51b5;
+  white-space: nowrap;
+}
+
+/* Boşluk bırakıcı */
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Kullanıcı adı */
+.username-display {
+  font-weight: 500;
+  color: #555;
+  margin: 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+/* İçerik alanı (toolbar altı) */
+.content-wrapper {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: auto; /* Scroll sadece burada */
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .app-title {
+    font-size: 1em;
+  }
+
+  .username-display {
+    font-size: 0.9em;
+  }
+}

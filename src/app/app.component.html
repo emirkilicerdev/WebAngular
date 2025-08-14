@@ -12,24 +12,21 @@
     <span class="spacer"></span>
 
     <!-- 'Admin' rolü olanlar için bağlantılar -->
-    <a mat-button routerLink="/home/users" routerLinkActive="active-link" *ngIf="authService.isAdmin$ | async">Kullanıcılar</a>
+    <a mat-button routerLink="/home/users" routerLinkActive="active-link" *ngIf="isLoggedIn$ | async">Kullanıcılar</a>
     <a mat-button routerLink="/home/roles" routerLinkActive="active-link" *ngIf="authService.isAdmin$ | async">Rol Yönetimi</a>
-
-    <!-- 'Editor' rolü olanlar için örnek bağlantı -->
-    <a mat-button routerLink="/home/editor-dashboard" routerLinkActive="active-link"
-       *ngIf="(authService.activeSelectedRole$ | async) === 'Editor'">Editör Paneli</a>
+    <a mat-button routerLink="active-link" routerLink="/home/leaves/new" *ngIf="isLoggedIn$ | async">İzin Al</a>
+    <a mat-button routerLink="/home/leaves" routerLinkActive="active-link"  *ngIf="isLoggedIn$ | async">İzin Yönetimi</a>
 
     <a mat-button routerLink="/register" *ngIf="!(isLoggedIn$ | async)" routerLinkActive="active-link">Kayıt Ol</a>
     <a mat-button routerLink="/login" *ngIf="!(isLoggedIn$ | async)" routerLinkActive="active-link">Giriş Yap</a>
 
     <button mat-button (click)="onLogout()" *ngIf="isLoggedIn$ | async">Çıkış Yap</button>
+
+
   </mat-toolbar>
 
   <main class="content-wrapper">
     <router-outlet></router-outlet>
   </main>
 
-  <footer class="app-footer">
-    <p>&copy; 2025 Kullanıcı Yönetimi Uygulaması</p>
-  </footer>
 </div>

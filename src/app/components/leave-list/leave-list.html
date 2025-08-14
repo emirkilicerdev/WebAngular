@@ -1,0 +1,29 @@
+<div class="leave-container">
+  <mat-card class="list-card">
+    <mat-card-title>İzin Listesi</mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-nav-list>
+      <mat-list-item *ngFor="let leave of leaves" (click)="selectLeave(leave.id)" class="clickable">
+        <mat-icon matListItemIcon>event_note</mat-icon>
+        
+        <div class="list-item-content">
+          <span class="user-name">{{ leave.userName }}</span>
+          <span class="leave-status">{{ leave.leaveStatusName }}</span>
+        </div>
+
+      </mat-list-item>
+      </mat-nav-list>
+    <button mat-button type="button" [routerLink]="['/home']">
+      <mat-icon>arrow_back</mat-icon> Geri
+    </button>
+  </mat-card>
+
+  <mat-card class="detail-card" *ngIf="selectedLeaveId">
+    <mat-card-title>İzin Detayları</mat-card-title>
+    <mat-divider></mat-divider>
+    <app-leave-detail 
+      [leaveId]="selectedLeaveId" 
+      (leaveStatusChanged)="loadLeaves()">
+    </app-leave-detail>
+  </mat-card>
+</div>

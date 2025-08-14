@@ -19,8 +19,10 @@
 
   mat-card-title {
     font-size: 2em;
+    font-weight: 450;
     text-align: center;
     color: var(--color-primary, #3f51b5);
+    margin: 0 0 16px;
   }
 
   .spinner-container,

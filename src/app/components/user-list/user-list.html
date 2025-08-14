@@ -24,22 +24,26 @@
       </div>
 
       <mat-list *ngIf="!isLoading && !errorMessage && users.length > 0">
-        <mat-list-item *ngFor="let user of users" class="mat-list-item">
-          <mat-icon matListItemIcon>person</mat-icon>
-          <div matListItemTitle class="username">{{ user.username }}</div>
-          <div matListItemLine>{{ user.email }}</div>
-          <!-- Rolleri virgülle ayrılmış bir string olarak göster -->
-          <div matListItemLine>Roller: {{ user.roles.join(', ') }}</div>
-          <div class="user-actions">
-            <button mat-icon-button color="primary" [routerLink]="['/home/users/edit', user.id]" *ngIf="authService.isAdmin$ | async">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="confirmDeleteUser(user)" *ngIf="authService.isAdmin$ | async">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </div>
-        </mat-list-item>
-      </mat-list>
+  <mat-list-item *ngFor="let user of users" class="mat-list-item">
+
+  <div class="list-item-content-wrapper">
+    <mat-icon matListItemIcon>person</mat-icon> 
+    <div class="user-info">
+      <div matListItemTitle class="username">{{ user.username }}</div>
+      <div matListItemLine>{{ user.email }}</div>
+      <div matListItemLine>Roller: {{ user.roles.join(', ') }}</div>
+    </div>
+    <div class="user-actions">
+      <button mat-icon-button color="primary" [routerLink]="['/home/users/edit', user.id]" *ngIf="authService.isAdmin$ | async">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="confirmDeleteUser(user)" *ngIf="authService.isAdmin$ | async">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+  </mat-list-item>
+</mat-list>
     </mat-card-content>
   </mat-card>
 </div>

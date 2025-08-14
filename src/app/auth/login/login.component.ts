@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
           this.snackBar.open(response.message || 'Giriş başarıyla tamamlandı!', 'Kapat', {
             duration: 3000,
             panelClass: ['success-snackbar'],
-            horizontalPosition: 'end',   // sağa hizala
+            horizontalPosition: 'left',   // sağa hizala
             verticalPosition: 'top'      // yukarı hizala
           });
           this.loginForm.reset(); // Formu temizle
@@ -82,11 +82,11 @@ export class LoginComponent implements OnInit {
         error: (err) => {
           console.error('Giriş Hatası:', err);
           // Hata mesajını kullanıcıya göster
-          const errorMessage = err.error?.message || 'Giriş yapılırken bir hata oluştu.';
+          const errorMessage = err.message;
           this.snackBar.open(errorMessage, 'Kapat', {
             duration: 5000,
             panelClass: ['error-snackbar'],
-            horizontalPosition: 'end',   // sağa hizala
+            horizontalPosition: 'left',   
             verticalPosition: 'top'      // yukarı hizala
           });
         }

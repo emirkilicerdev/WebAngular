@@ -1,21 +1,29 @@
+:host {
+  flex: 1; /* content-wrapper alanını doldur */
+  display: flex;
+}
+
 .login-container {
+  flex: 1; /* Kalan tüm yüksekliği al */
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Tam ekran yüksekliği */
-  background: linear-gradient(to right, #6a11cb, #2575fc); /* Register ile aynı arka plan */
-  padding: 20px;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
   box-sizing: border-box;
+  overflow: hidden; /* Taşan içeriği gizle */
+  min-height: 100vh; /* Ekran yüksekliğini kapla */
 }
 
 .login-card {
-  max-width: 400px; /* Formun maksimum genişliği */
+  max-width: 400px;
   width: 100%;
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
   background-color: #fff;
+  max-height: 90vh; /* Kart ekranın %90'ını geçmesin */
+  overflow-y: auto; /* Fazla içerik olursa sadece kart içinde scroll */
 }
 
 mat-card-title {
@@ -46,13 +54,14 @@ mat-card-title {
     color: #3f51b5;
     text-decoration: none;
     font-weight: 500;
+
     &:hover {
       text-decoration: underline;
     }
   }
 }
 
-/* Responsive ayarlar */
+/* Responsive */
 @media (max-width: 600px) {
   .login-card {
     margin: 0 15px;
@@ -64,13 +73,13 @@ mat-card-title {
 }
 
 .success-snackbar {
-  background-color: #4caf50; // yeşil
+  background-color: #4caf50;
   color: white;
   font-weight: 500;
 }
 
 .error-snackbar {
-  background-color: #f44336; // kırmızı
+  background-color: #f44336;
   color: white;
   font-weight: 500;
 }

@@ -1,0 +1,100 @@
+:host {
+  display: block;
+  padding: 16px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Ortak kart içeriği */
+mat-card-content {
+  padding: 1.5rem;
+  font-size: 15px;
+  color: #374151; // gri ton
+  line-height: 1.6;
+
+  p {
+    margin-bottom: 0.75rem;
+    strong {
+      color: #1f2937; // koyu gri
+      font-weight: 600;
+    }
+  }
+}
+
+/* Kart buton alanı */
+mat-card-actions {
+  padding: 1rem 1.5rem;
+  display: flex;
+  gap: 12px;
+
+  button {
+    font-weight: 500;
+    text-transform: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.25rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12); /* mat-elevation-z4 değeri */
+    }
+  }
+}
+
+/* Form alanları */
+.full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  margin-bottom: 1rem;
+
+  ::ng-deep .mat-form-field-outline {
+    border-radius: 8px;
+  }
+
+  ::ng-deep .mat-form-field-label {
+    font-weight: 500;
+    color: #374151;
+  }
+
+  textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+}
+
+/* Kaydet butonu (accent) */
+button[color="accent"] {
+  background-color: #3b82f6;
+  color: white;
+
+  &:hover {
+    background-color: #2563eb;
+  }
+}
+
+/* İptal butonu (warn) */
+button[color="warn"] {
+  background-color: #ef4444;
+  color: white;
+
+  &:hover {
+    background-color: #dc2626;
+  }
+}
+
+/* Edit mode geçişinde yumuşak animasyon */
+:host ::ng-deep .mat-card-content,
+:host ::ng-deep form {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.edit-mode-true {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.edit-mode-false {
+  opacity: 0;
+  transform: translateY(-5px);
+}

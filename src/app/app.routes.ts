@@ -13,6 +13,9 @@ import { RoleGuard } from './guards/role-guard'; // Yeni
 import { RoleSelectorComponent } from './components/role-selector/role-selector';
 import { RoleManagementComponent } from './components/role-management/role-management'; // Yeni
 import { NoAuthGuard } from './guards/no-auth-guard';
+import { LeaveListComponent } from './components/leave-list/leave-list'; // Yeni
+import { LeaveDetailComponent } from './components/leave-detail/leave-detail'; // Yeni
+import { LeaveRequestComponent } from './components/leave-request/leave-request'; // Yeni
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
@@ -62,7 +65,18 @@ export const routes: Routes = [
       {
         path: 'select-role', 
         component: RoleSelectorComponent, 
-        canActivate: [AuthGuard] } // Rol seçici bileşeni için rota
+        canActivate: [AuthGuard] 
+      },
+      {
+        path: 'leaves',
+        component: LeaveListComponent,
+        canActivate: [AuthGuard] // Sadece giriş yapmış kullanıcılar görebilmeli
+      },
+      {
+        path: 'leaves/new',
+        component: LeaveRequestComponent,
+        canActivate: [AuthGuard] // Sadece giriş yapmış kullanıcılar izin talebi oluşturabilmeli
+      },
     ]
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Uygulama ilk açıldığında login sayfasına yönlendir

@@ -1,84 +1,92 @@
 // src/app/app.routes.ts
 import { Routes } from '@angular/router';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { HomeComponent } from './components/home/home';
 import { AuthGuard } from './guards/auth-guard';
-import { UserListComponent } from './components/user-list/user-list';
-import { UserDetailComponent } from './components/user-detail/user-detail'; // Yeni
-import { UserFormComponent } from './components/user-form/user-form';     // Yeni
-import { ProfileComponent } from './components/profile/profile'; // Yeni
-import { ProfileEditComponent } from './components/profile-edit/profile-edit'; // Yeni
-import { RoleGuard } from './guards/role-guard'; // Yeni
-import { RoleSelectorComponent } from './components/role-selector/role-selector';
-import { RoleManagementComponent } from './components/role-management/role-management'; // Yeni
 import { NoAuthGuard } from './guards/no-auth-guard';
-import { LeaveListComponent } from './components/leave-list/leave-list'; // Yeni
-import { LeaveDetailComponent } from './components/leave-detail/leave-detail'; // Yeni
-import { LeaveRequestComponent } from './components/leave-request/leave-request'; // Yeni
+import { RoleGuard } from './guards/role-guard';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
-  { path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard] },
+  // Auth
+  { 
+    path: 'login', 
+    loadComponent: () => import('./auth/login/login.component').then(c => c.LoginComponent), 
+    canActivate: [NoAuthGuard] 
+  },
+  { 
+    path: 'register', 
+    loadComponent: () => import('./auth/register/register.component').then(c => c.RegisterComponent), 
+    canActivate: [NoAuthGuard] 
+  },
+
+  // Home ve child route'lar
   {
     path: 'home',
-    component: HomeComponent,
-    canActivate: [AuthGuard], // Home ve altındaki tüm rotalar için AuthGuard'ı kullan
+    loadComponent: () => import('./components/home/home').then(c => c.HomeComponent),
+    canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'users', pathMatch: 'full' }, // Home'a gidildiğinde varsayılan olarak kullanıcı listesine yönlendir
-      {
-        path: 'users',
-        component: UserListComponent,
+      { path: '', redirectTo: 'users', pathMatch: 'full' },
+
+      // Users
+      { 
+        path: 'users', 
+        loadComponent: () => import('./components/user-list/user-list').then(c => c.UserListComponent) 
       },
-      {
-        path: 'users/new',
-        component: UserFormComponent,
-        canActivate: [RoleGuard],
-        data: { role: 'Admin' }
+      { 
+        path: 'users/new', 
+        loadComponent: () => import('./components/user-form/user-form').then(c => c.UserFormComponent), 
+        canActivate: [RoleGuard], 
+        data: { role: 'Admin' } 
       },
-      {
-        path: 'users/edit/:id',
-        component: UserFormComponent,
-        canActivate: [RoleGuard],
-        data: { role: 'Admin' }
+      { 
+        path: 'users/edit/:id', 
+        loadComponent: () => import('./components/user-form/user-form').then(c => c.UserFormComponent), 
+        canActivate: [RoleGuard], 
+        data: { role: 'Admin' } 
       },
-      {
-        path: 'users/:id',
-        component: UserDetailComponent,
-        canActivate: [RoleGuard],
-        data: { role: 'Admin' }
+      { 
+        path: 'users/:id', 
+        loadComponent: () => import('./components/user-detail/user-detail').then(c => c.UserDetailComponent), 
+        canActivate: [RoleGuard], 
+        data: { role: 'Admin' } 
       },
-      {
-        path: 'profile', // Profil rotası artık sadece /home altında
-        component: ProfileComponent
-        // canActivate: [AuthGuard] // AuthGuard zaten parent 'home' rotasında olduğu için burada tekrar etmeye gerek yok
+
+      // Profile
+      { 
+        path: 'profile', 
+        loadComponent: () => import('./components/profile/profile').then(c => c.ProfileComponent) 
       },
-      {
-        path: 'profile/edit', // Profil düzenleme rotası da /home altında
-        component: ProfileEditComponent
-        // canActivate: [AuthGuard] // AuthGuard zaten parent 'home' rotasında olduğu için burada tekrar etmeye gerek yok
+      { 
+        path: 'profile/edit', 
+        loadComponent: () => import('./components/profile-edit/profile-edit').then(c => c.ProfileEditComponent) 
       },
-      {
-        path: "roles",
-        component: RoleManagementComponent,
+
+      // Roles
+      { 
+        path: 'roles', 
+        loadComponent: () => import('./components/role-management/role-management').then(c => c.RoleManagementComponent) 
       },
-      {
+      { 
         path: 'select-role', 
-        component: RoleSelectorComponent, 
+        loadComponent: () => import('./components/role-selector/role-selector').then(c => c.RoleSelectorComponent),
         canActivate: [AuthGuard] 
       },
-      {
-        path: 'leaves',
-        component: LeaveListComponent,
-        canActivate: [AuthGuard] // Sadece giriş yapmış kullanıcılar görebilmeli
+
+      // Leaves
+      { 
+        path: 'leaves', 
+        loadComponent: () => import('./components/leave-list/leave-list').then(c => c.LeaveListComponent) 
       },
-      {
-        path: 'leaves/new',
-        component: LeaveRequestComponent,
-        canActivate: [AuthGuard] // Sadece giriş yapmış kullanıcılar izin talebi oluşturabilmeli
+      { 
+        path: 'leaves/new', 
+        loadComponent: () => import('./components/leave-request/leave-request').then(c => c.LeaveRequestComponent) 
+      },
+      { 
+        path: 'leaves/:id', 
+        loadComponent: () => import('./components/leave-detail/leave-detail').then(c => c.LeaveDetailComponent) 
       },
     ]
   },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }, // Uygulama ilk açıldığında login sayfasına yönlendir
-  { path: '**', redirectTo: '/login' } // Tanımsız rotalar için login sayfasına yönlendir
+
+  // Default & fallback
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login' }
 ];
